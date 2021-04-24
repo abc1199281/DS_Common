@@ -23,6 +23,7 @@
 //====================================================================================================
 
 #include <iostream>
+#include <stack>
 #include <condition_variable>
 
 #include <DS_Common/LibSetting/LibSetting.h>
@@ -101,7 +102,7 @@ namespace DS_Common {
 
 		//-----------------------------------------------------------------------------------------
 		/*!
-		*  @brief      In order Traversal
+		*  @brief      Pre order Traversal
 		*
 		*/
 		void preorder(BTreeNode<T>* cur);
@@ -109,7 +110,7 @@ namespace DS_Common {
 
 		//-----------------------------------------------------------------------------------------
 		/*!
-		*  @brief      In order Traversal
+		*  @brief      Pre order Traversal
 		*
 		*/
 		void preorder() { preorder(root); };
@@ -117,7 +118,7 @@ namespace DS_Common {
 
 		//-----------------------------------------------------------------------------------------
 		/*!
-		*  @brief      In order Traversal
+		*  @brief      Pre order Traversal
 		*
 		*/
 		void postorder(BTreeNode<T>* cur);
@@ -125,10 +126,26 @@ namespace DS_Common {
 
 		//-----------------------------------------------------------------------------------------
 		/*!
-		*  @brief      In order Traversal
+		*  @brief      Pre order Traversal
 		*
 		*/
 		void postorder() { postorder(root); };
+		//-----------------------------------------------------------------------------------------
+
+
+		//-----------------------------------------------------------------------------------------
+		/*!
+		*  @brief      iterative_in_order
+		*
+		*/
+		void iterative_in_order(BTreeNode<T>* cur);
+		//-----------------------------------------------------------------------------------------
+		//-----------------------------------------------------------------------------------------
+		/*!
+		*  @brief      iterative_in_order
+		*
+		*/
+		void iterative_in_order() { iterative_in_order(root); };
 		//-----------------------------------------------------------------------------------------
 
 		//-----------------------------------------------------------------------------------------
@@ -140,6 +157,17 @@ namespace DS_Common {
 			visit_call_back_func = fun;
 		}
 		//-----------------------------------------------------------------------------------------
+
+
+
+		//-----------------------------------------------------------------------------------------
+		/*!
+		*  @brief      Check is Equal
+		*
+		*/
+		bool isEqual(BinaryTree<T>* r2) { return true; };
+		//-----------------------------------------------------------------------------------------
+
 	};
 	//--------------------------------------------------------------------------------------------
 }
@@ -183,6 +211,32 @@ namespace DS_Common {
 		visit_call_back_func(cur);
 		preorder(cur->left);
 		preorder(cur->right);
+	}
+	//-----------------------------------------------------------------------------------------
+
+
+	//-----------------------------------------------------------------------------------------
+	template<typename T>
+	void BinaryTree<T>::iterative_in_order(BTreeNode<T>* root)
+	{
+		if (!root) return;
+		std::stack<BTreeNode<T>*> stk;
+
+		BTreeNode<T>* cur=root;
+		while (1)
+		{
+			while (cur) {
+				stk.push(cur);
+				cur = cur->left;
+			}
+			if (stk.empty()) return;
+
+			cur = stk.top(); 
+			stk.pop();
+			visit_call_back_func(cur);
+			
+			cur = cur->right;
+		}
 	}
 	//-----------------------------------------------------------------------------------------
 }
