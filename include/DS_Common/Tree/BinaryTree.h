@@ -25,6 +25,7 @@
 #include <iostream>
 #include <stack>
 #include <queue>
+#include <vector>
 #include <condition_variable>
 
 #include <DS_Common/LibSetting/LibSetting.h>
@@ -52,21 +53,24 @@ namespace DS_Common {
 		BTreeNode(T x, BTreeNode<T> *left, BTreeNode<T> *right) : val(x), left(left), right(right) {}
 	};
 	//--------------------------------------------------------------------------------------------
+}
+//====================================================================================================
 
-	//--------------------------------------------------------------------------------------------
-	/*!
-	*  @brief      Binary Tree
-	*
-	*/
+
+/* Class */
+//====================================================================================================
+
+namespace DS_Common {
 	template<typename T>
 	class  BinaryTree
 	{
-	private:
-		BTreeNode<T>* root;
+	
+	private: // variable
 		using visit_callback = std::function< void(BTreeNode<T>* cur) >;
 		visit_callback visit_call_back_func;
 	public:
-		
+
+		BTreeNode<T>* root;
 		//-----------------------------------------------------------------------------------------
 		/*!
 		*  @brief      Default Constructor
@@ -74,6 +78,38 @@ namespace DS_Common {
 		*/
 		BinaryTree() {}
 		//-----------------------------------------------------------------------------------------
+		//-----------------------------------------------------------------------------------------
+		/*!
+		*  @brief      Default Constructor
+		*
+		*/
+		BinaryTree(std::string str, std::function<T(const std::string & input)> );
+		//-----------------------------------------------------------------------------------------
+
+		//-----------------------------------------------------------------------------------------
+		/*!
+		*  @brief      Constructor with Root
+		*
+		*/
+		BinaryTree(const BinaryTree<T> & copy) {
+			//BTreeNode<T> *tmp;
+			copyBinaryTree(this->root, copy.root);
+			//copy = *tmp;
+		}
+		//-----------------------------------------------------------------------------------------
+
+		void copyBinaryTree(BTreeNode<T> *r1, BTreeNode<T> *r2)
+		{
+			if (r1 == nullptr)
+			{
+				r2 = nullptr;
+			}else
+			{
+				r2 = new BTreeNode(r1->val);
+				copyBinaryTree(r1->left, r2->left);
+				copyBinaryTree(r1->right, r2->right);
+			}
+		}
 
 		//-----------------------------------------------------------------------------------------
 		/*!
@@ -198,19 +234,54 @@ namespace DS_Common {
 		bool isEqual(BinaryTree<T>* r2) { return true; };
 		//-----------------------------------------------------------------------------------------
 
+	private: // function
+		BTreeNode<T>* insertLevelOrder(std::vector<T>& arr, std::vector<int>& flag, int i);
 	};
 	//--------------------------------------------------------------------------------------------
 }
-
-
-
 //====================================================================================================
 
 
-/* Function */
+/* Public Function */
 //====================================================================================================
 
 namespace DS_Common {
+	//-----------------------------------------------------------------------------------------
+	template<typename T>
+	BinaryTree<T>::BinaryTree(std::string s, std::function<T(const std::string & input)> funct){
+		visit_call_back_func = [](BTreeNode<T>* cur)-> void {std::cout << cur->val << std::endl; };
+		int n = s.size();
+
+		std::vector<T> arr;
+		std::vector<int> flag;
+		std::string local;
+		for (int i = 0; i < n; i++)
+		{
+			if (s[i] == '[' || s[i] == ']' || s[i]==',' || s[i] == '.' || s[i] == ' ') continue;
+			if (s[i] == 'n')
+			{
+				i += 3;
+				T empty_ele;
+				flag.push_back(0);
+				arr.push_back(empty_ele);
+				continue;
+			}
+			else {
+
+				std::size_t found = s.find(',');
+				if (found == std::string::npos)
+					found = s.find(']');
+				if (found == std::string::npos)
+					continue;
+				s[found] = '.';
+				local = s.substr(i, found - i);
+
+				arr.push_back(funct(local));
+				flag.push_back(1);
+			}
+		}
+		this->root = insertLevelOrder(arr, flag, 0);
+	}
 	//-----------------------------------------------------------------------------------------
 	template<typename T>
 	void BinaryTree<T>::inorder(BTreeNode<T>* cur)
@@ -369,4 +440,35 @@ namespace DS_Common {
 }
 //====================================================================================================
 
+
+
+/* Private Function */
+//====================================================================================================
+
+namespace DS_Common {
+	//-----------------------------------------------------------------------------------------
+	template<typename T>
+	BTreeNode<T>* BinaryTree<T>::insertLevelOrder(std::vector<T> &arr, std::vector<int>& flag, int i) {
+		BTreeNode<T>* tmp = nullptr;
+		if (i < arr.size())
+		{
+			if (flag[i] == 1)
+				tmp = new BTreeNode<T>(arr[i]);
+			else
+				tmp= nullptr;
+
+			if (tmp != nullptr)
+			{
+				tmp->left = insertLevelOrder(arr, flag, 2 * i + 1);
+			}
+			if (tmp != nullptr)
+			{
+				tmp->right = insertLevelOrder(arr, flag, 2 * i + 2);
+			}
+		}
+		return tmp;
+	}
+	//-----------------------------------------------------------------------------------------
+}
+//====================================================================================================
 #endif /* __DS_COMMON_BINARY_TREE_H__ */
