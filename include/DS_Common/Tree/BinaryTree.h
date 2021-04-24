@@ -40,14 +40,14 @@ namespace DS_Common {
 	*
 	*/
 	template <class T>
-	struct TreeNode
+	struct BTreeNode
 	{
 		T val;
-		TreeNode *left;
-		TreeNode *right;
-		TreeNode() : left(nullptr), right(nullptr) {}
-		TreeNode(T x) : val(x), left(nullptr), right(nullptr) {}
-		TreeNode(T x, TreeNode<T> *left, TreeNode<T> *right) : val(x), left(left), right(right) {}
+		BTreeNode *left;
+		BTreeNode *right;
+		BTreeNode() : left(nullptr), right(nullptr) {}
+		BTreeNode(T x) : val(x), left(nullptr), right(nullptr) {}
+		BTreeNode(T x, BTreeNode<T> *left, BTreeNode<T> *right) : val(x), left(left), right(right) {}
 	};
 	//--------------------------------------------------------------------------------------------
 
@@ -60,8 +60,8 @@ namespace DS_Common {
 	class  BinaryTree
 	{
 	private:
-		TreeNode<T>* root;
-		using visit_callback = std::function< void(TreeNode<T>* cur) >;
+		BTreeNode<T>* root;
+		using visit_callback = std::function< void(BTreeNode<T>* cur) >;
 		visit_callback visit_call_back_func;
 	public:
 		
@@ -78,7 +78,9 @@ namespace DS_Common {
 		*  @brief      Constructor with Root
 		*
 		*/
-		BinaryTree(TreeNode<T>* r) : root(r) {}
+		BinaryTree(BTreeNode<T>* r) : root(r) { 
+			visit_call_back_func = [](BTreeNode<T>* cur)-> void {std::cout << cur->val << std::endl; };
+		}
 		//-----------------------------------------------------------------------------------------
 
 		//-----------------------------------------------------------------------------------------
@@ -86,7 +88,7 @@ namespace DS_Common {
 		*  @brief      In order Traversal
 		*
 		*/
-		void inorder(TreeNode<T>* cur);
+		void inorder(BTreeNode<T>* cur);
 		//-----------------------------------------------------------------------------------------
 
 		//-----------------------------------------------------------------------------------------
@@ -97,13 +99,37 @@ namespace DS_Common {
 		void inorder() { inorder(root); };
 		//-----------------------------------------------------------------------------------------
 
-		////-----------------------------------------------------------------------------------------
-		///*!
-		//*  @brief      visit function while traversal
-		//*
-		//*/
-		//void visit(TreeNode<T>* cur) { Callback(cur); };
-		////-----------------------------------------------------------------------------------------
+		//-----------------------------------------------------------------------------------------
+		/*!
+		*  @brief      In order Traversal
+		*
+		*/
+		void preorder(BTreeNode<T>* cur);
+		//-----------------------------------------------------------------------------------------
+
+		//-----------------------------------------------------------------------------------------
+		/*!
+		*  @brief      In order Traversal
+		*
+		*/
+		void preorder() { preorder(root); };
+		//-----------------------------------------------------------------------------------------
+
+		//-----------------------------------------------------------------------------------------
+		/*!
+		*  @brief      In order Traversal
+		*
+		*/
+		void postorder(BTreeNode<T>* cur);
+		//-----------------------------------------------------------------------------------------
+
+		//-----------------------------------------------------------------------------------------
+		/*!
+		*  @brief      In order Traversal
+		*
+		*/
+		void postorder() { postorder(root); };
+		//-----------------------------------------------------------------------------------------
 
 		//-----------------------------------------------------------------------------------------
 		/*!
@@ -129,14 +155,34 @@ namespace DS_Common {
 namespace DS_Common {
 	//-----------------------------------------------------------------------------------------
 	template<typename T>
-	void BinaryTree<T>::inorder(TreeNode<T>* cur)
+	void BinaryTree<T>::inorder(BTreeNode<T>* cur)
 	{
 		if (!cur) return;
 		inorder(cur->left);
-		//std::cout << cur->val << std::endl;		
-
 		visit_call_back_func(cur);
 		inorder(cur->right);
+	}
+	//-----------------------------------------------------------------------------------------
+
+	//-----------------------------------------------------------------------------------------
+	template<typename T>
+	void BinaryTree<T>::postorder(BTreeNode<T>* cur)
+	{
+		if (!cur) return;
+		postorder(cur->left);
+		postorder(cur->right);
+		visit_call_back_func(cur);
+	}
+	//-----------------------------------------------------------------------------------------
+
+	//-----------------------------------------------------------------------------------------
+	template<typename T>
+	void BinaryTree<T>::preorder(BTreeNode<T>* cur)
+	{
+		if (!cur) return;
+		visit_call_back_func(cur);
+		preorder(cur->left);
+		preorder(cur->right);
 	}
 	//-----------------------------------------------------------------------------------------
 }
