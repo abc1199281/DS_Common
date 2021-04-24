@@ -56,6 +56,10 @@ void IterativeTraversal(BinaryTree<int>& tmp) {
 
 	std::cout << "in order" << std::endl;
 	tmp.iterative_in_order();
+	std::cout << "pre order" << std::endl;
+	tmp.iterative_pre_order();
+	std::cout << "post order" << std::endl;
+	tmp.iterative_post_order();
 }
 //-------------------------------------------------------------------------------------------------
 
