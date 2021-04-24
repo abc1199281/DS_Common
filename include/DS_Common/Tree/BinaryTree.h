@@ -23,6 +23,8 @@
 //====================================================================================================
 
 #include <iostream>
+#include <condition_variable>
+
 #include <DS_Common/LibSetting/LibSetting.h>
 //====================================================================================================
 
@@ -57,6 +59,10 @@ namespace DS_Common {
 	template<typename T>
 	class  BinaryTree
 	{
+	private:
+		TreeNode<T>* root;
+		using visit_callback = std::function< void(TreeNode<T>* cur) >;
+		visit_callback visit_call_back_func;
 	public:
 		
 		//-----------------------------------------------------------------------------------------
@@ -82,6 +88,7 @@ namespace DS_Common {
 		*/
 		void inorder(TreeNode<T>* cur);
 		//-----------------------------------------------------------------------------------------
+
 		//-----------------------------------------------------------------------------------------
 		/*!
 		*  @brief      In order Traversal
@@ -90,9 +97,23 @@ namespace DS_Common {
 		void inorder() { inorder(root); };
 		//-----------------------------------------------------------------------------------------
 
+		////-----------------------------------------------------------------------------------------
+		///*!
+		//*  @brief      visit function while traversal
+		//*
+		//*/
+		//void visit(TreeNode<T>* cur) { Callback(cur); };
+		////-----------------------------------------------------------------------------------------
 
-	private:
-		TreeNode<T>* root;
+		//-----------------------------------------------------------------------------------------
+		/*!
+		*  @brief      set call back function
+		*
+		*/
+		void set_callback(visit_callback  fun) {
+			visit_call_back_func = fun;
+		}
+		//-----------------------------------------------------------------------------------------
 	};
 	//--------------------------------------------------------------------------------------------
 }
@@ -112,7 +133,9 @@ namespace DS_Common {
 	{
 		if (!cur) return;
 		inorder(cur->left);
-		std::cout << cur->val << std::endl;
+		//std::cout << cur->val << std::endl;		
+
+		visit_call_back_func(cur);
 		inorder(cur->right);
 	}
 	//-----------------------------------------------------------------------------------------
