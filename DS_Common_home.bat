@@ -1,0 +1,1 @@
+setx DS_COMMON_HOME %~dp0%
