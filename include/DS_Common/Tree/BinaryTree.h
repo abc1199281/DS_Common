@@ -51,6 +51,7 @@ namespace DS_Common {
 		BTreeNode() : left(nullptr), right(nullptr) {}
 		BTreeNode(T x) : val(x), left(nullptr), right(nullptr) {}
 		BTreeNode(T x, BTreeNode<T> *left, BTreeNode<T> *right) : val(x), left(left), right(right) {}
+		~BTreeNode() { delete left; delete right; }
 	};
 	//--------------------------------------------------------------------------------------------
 }
