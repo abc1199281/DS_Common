@@ -267,6 +267,34 @@ namespace DS_Common {
 		bool BinaryTree<T>::operator==(const BinaryTree<T>& r2) { return isEqual(this->root, r2.root); };
 		//-----------------------------------------------------------------------------------------
 
+
+		//-----------------------------------------------------------------------------------------
+		/*!
+		*  @brief      Check is Equal
+		*
+		*/
+		void DestroyRecursive(BTreeNode<T>*  node)
+		{
+			if (node!=nullptr)
+			{
+				DestroyRecursive(node->left);
+				DestroyRecursive(node->right);
+				delete node;
+			}
+		}
+		//-----------------------------------------------------------------------------------------
+
+		//-----------------------------------------------------------------------------------------
+		/*!
+		*  @brief      Destructor
+		*
+		*/
+		~BinaryTree()
+		{
+			DestroyRecursive(this->root);
+		}
+		//-----------------------------------------------------------------------------------------
+
 	private: // function
 		BTreeNode<T>* insertLevelOrder(std::vector<T>& arr, std::vector<int>& flag, int i);
 	};

@@ -96,8 +96,22 @@ void CopyConstructor() {
 	std::cout << "Copy Constructor" << std::endl;
 	new_bt.inorder();
 
-	if(new_bt == bt)
-		std::cout << "Is Equal"  <<std::endl;
+	if (new_bt == bt)
+		std::cout << "Is Equal" << std::endl;
+	else
+		std::cout << "not equal" << std::endl;
+
+	//std::cout << "Destructor" << std::endl;
+	//
+	//new_bt.~BinaryTree<int>();
+	//new_bt.set_callback([](BTreeNode<int>* cur)->void {std::cout << cur->val << std::endl; });
+	//new_bt.inorder();
+
+	//if (new_bt == bt)
+	//	std::cout << "Is Equal" << std::endl;
+	//else
+	//	std::cout << "not equal" << std::endl;
+
 }
 //-------------------------------------------------------------------------------------------------
 
