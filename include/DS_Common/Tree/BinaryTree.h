@@ -91,25 +91,29 @@ namespace DS_Common {
 		*  @brief      Constructor with Root
 		*
 		*/
-		BinaryTree(const BinaryTree<T> & copy) {
-			//BTreeNode<T> *tmp;
-			copyBinaryTree(this->root, copy.root);
-			//copy = *tmp;
+		BinaryTree(const BinaryTree<T> & src) {	
+			visit_call_back_func = [](BTreeNode<T>* cur)-> void {std::cout << cur->val << std::endl; };
+			this->root = copyBinaryTree(src.root);
 		}
 		//-----------------------------------------------------------------------------------------
 
-		void copyBinaryTree(BTreeNode<T> *r1, BTreeNode<T> *r2)
+		//-----------------------------------------------------------------------------------------
+		/*!
+		*  @brief      Constructor with Root
+		*
+		*/
+		BTreeNode<T> * copyBinaryTree(BTreeNode<T> *src)
 		{
-			if (r1 == nullptr)
+			if (src == nullptr)
 			{
-				r2 = nullptr;
-			}else
-			{
-				r2 = new BTreeNode(r1->val);
-				copyBinaryTree(r1->left, r2->left);
-				copyBinaryTree(r1->right, r2->right);
+				return nullptr;
 			}
+			
+			return new BTreeNode<T>(src->val,
+									copyBinaryTree(src->left),
+									copyBinaryTree(src->right));
 		}
+		//-----------------------------------------------------------------------------------------
 
 		//-----------------------------------------------------------------------------------------
 		/*!
@@ -119,6 +123,22 @@ namespace DS_Common {
 		BinaryTree(BTreeNode<T>* r) : root(r) { 
 			visit_call_back_func = [](BTreeNode<T>* cur)-> void {std::cout << cur->val << std::endl; };
 		}
+		//-----------------------------------------------------------------------------------------
+
+		//-----------------------------------------------------------------------------------------
+		/*!
+		*  @brief      level order Traversal
+		*
+		*/
+		void levelorder(BTreeNode<T>* cur);
+		//-----------------------------------------------------------------------------------------
+
+		//-----------------------------------------------------------------------------------------
+		/*!
+		*  @brief      level order Traversal
+		*
+		*/
+		void levelorder() { levelorder(root); };
 		//-----------------------------------------------------------------------------------------
 
 		//-----------------------------------------------------------------------------------------
@@ -283,10 +303,31 @@ namespace DS_Common {
 		this->root = insertLevelOrder(arr, flag, 0);
 	}
 	//-----------------------------------------------------------------------------------------
+
+	//-----------------------------------------------------------------------------------------
+	template<typename T>
+	void BinaryTree<T>::levelorder(BTreeNode<T>* root)
+	{
+		if (!root) return;
+		std::queue<BTreeNode<T>*> q;
+		BTreeNode<T>* cur = root;
+		q.push(cur);
+		while (!q.empty())
+		{
+			cur = q.front();
+			q.pop();
+
+			visit_call_back_func(cur);
+			if (cur->left) q.push(cur->left);			
+			if (cur->right) q.push(cur->right);
+		}
+	}
+	//-----------------------------------------------------------------------------------------
+	//-----------------------------------------------------------------------------------------
 	template<typename T>
 	void BinaryTree<T>::inorder(BTreeNode<T>* cur)
 	{
-		if (!cur) return;
+		if (cur==nullptr) return;
 		inorder(cur->left);
 		visit_call_back_func(cur);
 		inorder(cur->right);

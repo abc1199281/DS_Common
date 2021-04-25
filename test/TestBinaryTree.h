@@ -18,6 +18,7 @@ using namespace DS_Common;
 void basicTraversal(BinaryTree<int>& root);
 void IterativeTraversal(BinaryTree<int>& tmp);
 void StringConstructor();
+void CopyConstructor();
 //====================================================================================================
 
 /* Public Function */
@@ -36,7 +37,7 @@ void TestBinaryTree()
 	basicTraversal(tmp);
 	IterativeTraversal(tmp);
 	StringConstructor();
-
+	CopyConstructor();
 }
 //====================================================================================================
 
@@ -68,6 +69,9 @@ void IterativeTraversal(BinaryTree<int>& tmp) {
 	tmp.iterative_pre_order();
 	std::cout << "post order" << std::endl;
 	tmp.iterative_post_order();
+
+	std::cout << "level order" << std::endl;
+	tmp.levelorder();
 }
 //-------------------------------------------------------------------------------------------------
 
@@ -77,6 +81,20 @@ void StringConstructor() {
 	BinaryTree<int> bt(str, [](const std::string& s)->int {return std::stoi(s); });
 	
 	bt.inorder(bt.root);
+}
+//-------------------------------------------------------------------------------------------------
+
+
+void CopyConstructor() {
+	std::string str = "[1,2,2,null,3,null,3]";
+	std::cout << "Copy Constructor" << std::endl;
+	BinaryTree<int> bt(str, [](const std::string& s)->int {return std::stoi(s); });
+	BinaryTree<int> new_bt = bt;
+
+	std::cout << "Origin" << std::endl;
+	bt.inorder();
+	std::cout << "Copy Constructor" << std::endl;
+	new_bt.inorder();
 }
 //-------------------------------------------------------------------------------------------------
 
