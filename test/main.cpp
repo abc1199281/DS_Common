@@ -8,6 +8,7 @@
 
 #include <DS_Common/Tree/BinaryTree.h>
 #include <TestBinaryTree.h>
+#include <TestPriorityQueue.h>
 
 using namespace DS_Common;
 //====================================================================================================
@@ -17,7 +18,8 @@ using namespace DS_Common;
 //====================================================================================================
 int main(int argc, char ** argv)
 {
-	TestBinaryTree();
+	//TestBinaryTree();
+	TestPriorityQueue();
 
 	system("pause");
 	return 0;
