@@ -251,7 +251,20 @@ namespace DS_Common {
 		*  @brief      Check is Equal
 		*
 		*/
-		bool isEqual(BinaryTree<T>* r2) { return true; };
+		bool isEqual(BTreeNode<T>* r1, BTreeNode<T>* r2) {
+			if ((!r1) && (!r2)) return true;
+			return (r1 && r2
+				&& (r1->val == r2->val)
+				&& isEqual(r1->left, r2->left)
+				&& isEqual(r1->right, r2->right));
+		};
+		//-----------------------------------------------------------------------------------------
+		//-----------------------------------------------------------------------------------------
+		/*!
+		*  @brief      Check is Equal
+		*
+		*/
+		bool BinaryTree<T>::operator==(const BinaryTree<T>& r2) { return isEqual(this->root, r2.root); };
 		//-----------------------------------------------------------------------------------------
 
 	private: // function

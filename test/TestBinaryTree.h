@@ -95,6 +95,9 @@ void CopyConstructor() {
 	bt.inorder();
 	std::cout << "Copy Constructor" << std::endl;
 	new_bt.inorder();
+
+	if(new_bt == bt)
+		std::cout << "Is Equal"  <<std::endl;
 }
 //-------------------------------------------------------------------------------------------------
 
