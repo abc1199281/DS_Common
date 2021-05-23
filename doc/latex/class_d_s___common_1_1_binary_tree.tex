@@ -1,0 +1,136 @@
+\hypertarget{class_d_s___common_1_1_binary_tree}{}\section{D\+S\+\_\+\+Common\+:\+:Binary\+Tree$<$ T $>$ Class Template Reference}
+\label{class_d_s___common_1_1_binary_tree}\index{D\+S\+\_\+\+Common\+::\+Binary\+Tree$<$ T $>$@{D\+S\+\_\+\+Common\+::\+Binary\+Tree$<$ T $>$}}
+
+
+Binary Tree.  
+
+
+
+
+{\ttfamily \#include $<$Binary\+Tree.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_d_s___common_1_1_binary_tree_a12febe864bcdd97421d884a0cdd84ba0}{Binary\+Tree}} ()
+\begin{DoxyCompactList}\small\item\em Default Constructor. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_d_s___common_1_1_binary_tree_aabe4c48985d51037acfd37b5752671bd}{Binary\+Tree}} (\mbox{\hyperlink{struct_d_s___common_1_1_tree_node}{Tree\+Node}}$<$ T $>$ $\ast$r)
+\begin{DoxyCompactList}\small\item\em Constructor with Root. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_d_s___common_1_1_binary_tree_add37c15569860383f8e832a046864079}{inorder}} (\mbox{\hyperlink{struct_d_s___common_1_1_tree_node}{Tree\+Node}}$<$ T $>$ $\ast$cur)
+\begin{DoxyCompactList}\small\item\em In order Traversal. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_d_s___common_1_1_binary_tree_ac60980a1c81e20fb73bf5ed4cfcf5e1d}{inorder}} ()
+\begin{DoxyCompactList}\small\item\em In order Traversal. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\subsubsection*{template$<$typename T$>$\newline
+class D\+S\+\_\+\+Common\+::\+Binary\+Tree$<$ T $>$}
+
+Binary Tree. 
+
+Definition at line 58 of file Binary\+Tree.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_d_s___common_1_1_binary_tree_a12febe864bcdd97421d884a0cdd84ba0}\label{class_d_s___common_1_1_binary_tree_a12febe864bcdd97421d884a0cdd84ba0}} 
+\index{D\+S\+\_\+\+Common\+::\+Binary\+Tree@{D\+S\+\_\+\+Common\+::\+Binary\+Tree}!Binary\+Tree@{Binary\+Tree}}
+\index{Binary\+Tree@{Binary\+Tree}!D\+S\+\_\+\+Common\+::\+Binary\+Tree@{D\+S\+\_\+\+Common\+::\+Binary\+Tree}}
+\subsubsection{\texorpdfstring{Binary\+Tree()}{BinaryTree()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{class_d_s___common_1_1_binary_tree}{D\+S\+\_\+\+Common\+::\+Binary\+Tree}}$<$ T $>$\+::\mbox{\hyperlink{class_d_s___common_1_1_binary_tree}{Binary\+Tree}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Default Constructor. 
+
+
+
+Definition at line 67 of file Binary\+Tree.\+h.
+
+
+\begin{DoxyCode}
+67 \{\}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_d_s___common_1_1_binary_tree_aabe4c48985d51037acfd37b5752671bd}\label{class_d_s___common_1_1_binary_tree_aabe4c48985d51037acfd37b5752671bd}} 
+\index{D\+S\+\_\+\+Common\+::\+Binary\+Tree@{D\+S\+\_\+\+Common\+::\+Binary\+Tree}!Binary\+Tree@{Binary\+Tree}}
+\index{Binary\+Tree@{Binary\+Tree}!D\+S\+\_\+\+Common\+::\+Binary\+Tree@{D\+S\+\_\+\+Common\+::\+Binary\+Tree}}
+\subsubsection{\texorpdfstring{Binary\+Tree()}{BinaryTree()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+\mbox{\hyperlink{class_d_s___common_1_1_binary_tree}{D\+S\+\_\+\+Common\+::\+Binary\+Tree}}$<$ T $>$\+::\mbox{\hyperlink{class_d_s___common_1_1_binary_tree}{Binary\+Tree}} (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_d_s___common_1_1_tree_node}{Tree\+Node}}$<$ T $>$ $\ast$}]{r }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructor with Root. 
+
+
+
+Definition at line 75 of file Binary\+Tree.\+h.
+
+
+\begin{DoxyCode}
+75 : root(r) \{\}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_d_s___common_1_1_binary_tree_add37c15569860383f8e832a046864079}\label{class_d_s___common_1_1_binary_tree_add37c15569860383f8e832a046864079}} 
+\index{D\+S\+\_\+\+Common\+::\+Binary\+Tree@{D\+S\+\_\+\+Common\+::\+Binary\+Tree}!inorder@{inorder}}
+\index{inorder@{inorder}!D\+S\+\_\+\+Common\+::\+Binary\+Tree@{D\+S\+\_\+\+Common\+::\+Binary\+Tree}}
+\subsubsection{\texorpdfstring{inorder()}{inorder()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{class_d_s___common_1_1_binary_tree}{D\+S\+\_\+\+Common\+::\+Binary\+Tree}}$<$ T $>$\+::inorder (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_d_s___common_1_1_tree_node}{Tree\+Node}}$<$ T $>$ $\ast$}]{cur }\end{DoxyParamCaption})}
+
+
+
+In order Traversal. 
+
+
+
+Definition at line 111 of file Binary\+Tree.\+h.
+
+
+
+References D\+S\+\_\+\+Common\+::\+Tree\+Node$<$ T $>$\+::left, D\+S\+\_\+\+Common\+::\+Tree\+Node$<$ T $>$\+::right, and D\+S\+\_\+\+Common\+::\+Tree\+Node$<$ T $>$\+::val.
+
+
+\begin{DoxyCode}
+112     \{
+113         \textcolor{keywordflow}{if} (!cur) \textcolor{keywordflow}{return};
+114         \mbox{\hyperlink{class_d_s___common_1_1_binary_tree_ac60980a1c81e20fb73bf5ed4cfcf5e1d}{inorder}}(cur->left);
+115         std::cout << cur->val << std::endl;
+116         \mbox{\hyperlink{class_d_s___common_1_1_binary_tree_ac60980a1c81e20fb73bf5ed4cfcf5e1d}{inorder}}(cur->right);
+117     \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_d_s___common_1_1_binary_tree_ac60980a1c81e20fb73bf5ed4cfcf5e1d}\label{class_d_s___common_1_1_binary_tree_ac60980a1c81e20fb73bf5ed4cfcf5e1d}} 
+\index{D\+S\+\_\+\+Common\+::\+Binary\+Tree@{D\+S\+\_\+\+Common\+::\+Binary\+Tree}!inorder@{inorder}}
+\index{inorder@{inorder}!D\+S\+\_\+\+Common\+::\+Binary\+Tree@{D\+S\+\_\+\+Common\+::\+Binary\+Tree}}
+\subsubsection{\texorpdfstring{inorder()}{inorder()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename T $>$ \\
+void \mbox{\hyperlink{class_d_s___common_1_1_binary_tree}{D\+S\+\_\+\+Common\+::\+Binary\+Tree}}$<$ T $>$\+::inorder (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+In order Traversal. 
+
+
+
+Definition at line 90 of file Binary\+Tree.\+h.
+
+
+
+References D\+S\+\_\+\+Common\+::\+Binary\+Tree$<$ T $>$\+::inorder().
+
+
+
+Referenced by D\+S\+\_\+\+Common\+::\+Binary\+Tree$<$ T $>$\+::inorder().
+
+
+\begin{DoxyCode}
+90 \{ \mbox{\hyperlink{class_d_s___common_1_1_binary_tree_ac60980a1c81e20fb73bf5ed4cfcf5e1d}{inorder}}(root); \};
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_binary_tree_8h}{Binary\+Tree.\+h}}\end{DoxyCompactItemize}
