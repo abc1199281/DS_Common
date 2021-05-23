@@ -1,19 +1,19 @@
-// PriorityQueue.h
+// Queue.h
 
-#ifndef __DS_COMMON_PRIORITY_QUEUE_H__
-#define __DS_COMMON_PRIORITY_QUEUE_H__
+#ifndef __DS_COMMON_QUEUE_H__
+#define __DS_COMMON_QUEUE_H__
 
 /* Information */
 //====================================================================================================
 
 /*!
-*  @file   PriorityQueue.h
+*  @file   queue.h
 *
-*  @brief  PriorityQueue implementation usin BinaryTree.
+*  @brief  queue.
 *
 *  @author Po-Wei Huang
 *
-*  @date   2021/04/24
+*  @date   2021/05/22
 */
 
 //====================================================================================================
@@ -25,9 +25,10 @@
 #include <iostream>
 #include <vector>
 #include <condition_variable>
+#include <algorithm>
 
+#include <DS_Common/Common/Common.h>
 #include <DS_Common/LibSetting/LibSetting.h>
-#include <DS_Common/Tree/BinaryTree.h>
 //====================================================================================================
 
 
@@ -40,26 +41,36 @@
 
 namespace DS_Common {
 	template<typename T>
-	class  DS_COMMON_EXPORTS PriorityQueue
+	class  DS_COMMON_EXPORTS queue
 	{
 	private: // variable
-		std::vector<T> heap;
-		int heapSize;
+		T* queue_array;
+		int front_idx;
+		int back_idx;
+		int capacity;
 
 	public: // function
+
 		//-----------------------------------------------------------------------------------------
 		/*!
 		*  @brief      Constructor
 		*
 		*/
-		PriorityQueue(int n = 1);
+		queue(int n = 10);
 		//-----------------------------------------------------------------------------------------
 		//-----------------------------------------------------------------------------------------
 		/*!
-		*  @brief      return the top.
+		*  @brief      Access next element 
 		*
 		*/
-		const T& top();
+		T& front() const;
+		//-----------------------------------------------------------------------------------------
+		//-----------------------------------------------------------------------------------------
+		/*!
+		*  @brief      Access last element
+		*
+		*/
+		T& back() const;
 		//-----------------------------------------------------------------------------------------
 
 		//-----------------------------------------------------------------------------------------
@@ -82,7 +93,7 @@ namespace DS_Common {
 		*  @brief      Default Constructor
 		*
 		*/
-		bool isempty() { return heapSize==0; };
+		bool empty() const { return front_idx == back_idx; };
 		//-----------------------------------------------------------------------------------------
 
 		//-----------------------------------------------------------------------------------------
@@ -90,7 +101,7 @@ namespace DS_Common {
 		*  @brief      Destructor
 		*
 		*/
-		~PriorityQueue() {}
+		~queue() {}
 		//-----------------------------------------------------------------------------------------
 
 	};
@@ -105,63 +116,60 @@ namespace DS_Common {
 namespace DS_Common {
 	//------------------------------------------------------------------------------------------------
 	template<typename T>
-	PriorityQueue<T>::PriorityQueue(int n)
+	queue<T>::queue(int n) : capacity(n)
 	{
-		if (n < 1) throw "Capacity or Priority Queue must be >=1.";
-		heap = std::vector<T>(n + 1);// heap[0] is not used.
-		heapSize = 0;
-	}
-	//------------------------------------------------------------------------------------------------
-	
-	template<typename T>
-	void PriorityQueue<T>::push(const T& e) {
-
-		if (heapSize == heap.size())
-		{
-			heap.resize(2*heap.size());
-		}
-		int curNode = ++heapSize;
-		while (curNode != 1 && heap[curNode / 2] < e) // bobbling up.
-		{
-			heap[curNode] = heap[curNode / 2];
-			curNode /= 2;
-		}
-		heap[curNode] = e;
+		if (n < 1) throw "Capacity of stack must be >=1.";
+		queue_array = new T[n];
+		front_idx = back_idx = 0;
 	}
 	//------------------------------------------------------------------------------------------------
 
 	template<typename T>
-	void PriorityQueue<T>::pop() {
-		if (isempty()) throw "Heap is empty. Cannot Pop.";
-		
-		heap[1].~T(); // remove the max;
-
-		T lastE = heap[heapSize];
-		heapSize--;
-
-		int cur = 1;
-		int child = 2;
-		while (child <= heapSize)
+	void queue<T>::push(const T& x) {
+		if ((back_idx+1)%capacity == front_idx)
 		{
-			if (child < heapSize && heap[child] < heap[child + 1]) child++; // two child choose the largest.
-			if (lastE >= heap[child]) break;
+			T* newQueue = new T[2 * capacity];
+			int start = (front_idx + 1) % capacity;
+			if (start < 2)
+				std::copy(queue_array +start, queue_array+start+capacity-1, newQueue);
+			else {
+				std::copy(queue_array + start, queue_array+capacity, newQueue);
+				std::copy(queue_array, queue_array + back_idx +1, newQueue+capacity-start);
+			}
+			front_idx = 2 * capacity - 1;
+			back_idx = capacity - 2;
+			capacity *= 2;
+			delete[] queue_array;
+			queue_array = newQueue;
 
-			heap[cur] = heap[child];
-			cur = child;
-			child *= 2;// next level;
 		}
-		heap[cur] = lastE;
+		back_idx = (back_idx + 1) % capacity;
+		queue_array[back_idx] = x;
 	}
 	//------------------------------------------------------------------------------------------------
 
 	template<typename T>
-	const T&  PriorityQueue<T>::top() {
-		if (heapSize > 0)
-			return heap[1];
-		else
-			return T();
+	void queue<T>::pop() {
+		if (empty()) throw "Queue is empty, cannot delete.";
+		front_idx = (front_idx + 1) % capacity;
+		//queue_array[front_idx].~T();
+	}
+	//------------------------------------------------------------------------------------------------
+
+	template<typename T>
+	T&  queue<T>::front() const {
+		if (empty()) 
+			throw "Queue is empty";
+		return queue_array[(front_idx+1)%capacity];
+	}
+	//------------------------------------------------------------------------------------------------
+
+	template<typename T>
+	T&  queue<T>::back() const {
+		if (empty()) throw "Queue is empty";
+		return queue_array[back_idx];
 	}
 	//------------------------------------------------------------------------------------------------
 }
 //====================================================================================================
-#endif /* __DS_COMMON_PRIORITY_QUEUE_H__ */
+#endif /* __DS_COMMON_QUEUE_H__ */

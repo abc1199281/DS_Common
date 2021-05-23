@@ -1,19 +1,19 @@
-// PriorityQueue.h
+// Stack.h
 
-#ifndef __DS_COMMON_PRIORITY_QUEUE_H__
-#define __DS_COMMON_PRIORITY_QUEUE_H__
+#ifndef __DS_COMMON_STACK_H__
+#define __DS_COMMON_STACK_H__
 
 /* Information */
 //====================================================================================================
 
 /*!
-*  @file   PriorityQueue.h
+*  @file   stack.h
 *
-*  @brief  PriorityQueue implementation usin BinaryTree.
+*  @brief  stack.
 *
 *  @author Po-Wei Huang
 *
-*  @date   2021/04/24
+*  @date   2021/05/22
 */
 
 //====================================================================================================
@@ -26,8 +26,8 @@
 #include <vector>
 #include <condition_variable>
 
+#include <DS_Common/Common/Common.h>
 #include <DS_Common/LibSetting/LibSetting.h>
-#include <DS_Common/Tree/BinaryTree.h>
 //====================================================================================================
 
 
@@ -40,23 +40,34 @@
 
 namespace DS_Common {
 	template<typename T>
-	class  DS_COMMON_EXPORTS PriorityQueue
+	class  DS_COMMON_EXPORTS stack
 	{
 	private: // variable
-		std::vector<T> heap;
-		int heapSize;
+		T* stack_array;
+		int top_idx;
+		int capacity;
 
 	public: // function
+
 		//-----------------------------------------------------------------------------------------
 		/*!
 		*  @brief      Constructor
 		*
 		*/
-		PriorityQueue(int n = 1);
+		stack(int n = 10);
 		//-----------------------------------------------------------------------------------------
+
 		//-----------------------------------------------------------------------------------------
 		/*!
-		*  @brief      return the top.
+		*  @brief      Constructor
+		*
+		*/
+		int size() { return top_idx+1;};
+		//-----------------------------------------------------------------------------------------
+
+		//-----------------------------------------------------------------------------------------
+		/*!
+		*  @brief      Access next element
 		*
 		*/
 		const T& top();
@@ -72,7 +83,7 @@ namespace DS_Common {
 
 		//-----------------------------------------------------------------------------------------
 		/*!
-		*  @brief      push
+		*  @brief      Insert element
 		*/
 		void push(const T& e);
 		//-----------------------------------------------------------------------------------------
@@ -82,7 +93,7 @@ namespace DS_Common {
 		*  @brief      Default Constructor
 		*
 		*/
-		bool isempty() { return heapSize==0; };
+		bool empty() const { return top_idx == -1; };
 		//-----------------------------------------------------------------------------------------
 
 		//-----------------------------------------------------------------------------------------
@@ -90,7 +101,7 @@ namespace DS_Common {
 		*  @brief      Destructor
 		*
 		*/
-		~PriorityQueue() {}
+		~stack() {}
 		//-----------------------------------------------------------------------------------------
 
 	};
@@ -105,63 +116,38 @@ namespace DS_Common {
 namespace DS_Common {
 	//------------------------------------------------------------------------------------------------
 	template<typename T>
-	PriorityQueue<T>::PriorityQueue(int n)
+	stack<T>::stack(int n) :capacity(n)
 	{
-		if (n < 1) throw "Capacity or Priority Queue must be >=1.";
-		heap = std::vector<T>(n + 1);// heap[0] is not used.
-		heapSize = 0;
-	}
-	//------------------------------------------------------------------------------------------------
-	
-	template<typename T>
-	void PriorityQueue<T>::push(const T& e) {
-
-		if (heapSize == heap.size())
-		{
-			heap.resize(2*heap.size());
-		}
-		int curNode = ++heapSize;
-		while (curNode != 1 && heap[curNode / 2] < e) // bobbling up.
-		{
-			heap[curNode] = heap[curNode / 2];
-			curNode /= 2;
-		}
-		heap[curNode] = e;
+		if (n < 1) throw "Capacity of stack must be >=1.";
+		stack_array = new T[n];
+		top_idx = -1;
 	}
 	//------------------------------------------------------------------------------------------------
 
 	template<typename T>
-	void PriorityQueue<T>::pop() {
-		if (isempty()) throw "Heap is empty. Cannot Pop.";
-		
-		heap[1].~T(); // remove the max;
-
-		T lastE = heap[heapSize];
-		heapSize--;
-
-		int cur = 1;
-		int child = 2;
-		while (child <= heapSize)
+	void stack<T>::push(const T& x) {
+		if (top_idx == capacity - 1)
 		{
-			if (child < heapSize && heap[child] < heap[child + 1]) child++; // two child choose the largest.
-			if (lastE >= heap[child]) break;
-
-			heap[cur] = heap[child];
-			cur = child;
-			child *= 2;// next level;
+			ChangeSize1D(stack_array, capacity, capacity*2);
+			capacity *= 2;
 		}
-		heap[cur] = lastE;
+		stack_array[++top_idx] = x;
 	}
 	//------------------------------------------------------------------------------------------------
 
 	template<typename T>
-	const T&  PriorityQueue<T>::top() {
-		if (heapSize > 0)
-			return heap[1];
-		else
-			return T();
+	void stack<T>::pop() {
+		if (empty() == -1) throw "Stack is empty, cannot delete.";
+		stack_array[top_idx--].~T();
+	}
+	//------------------------------------------------------------------------------------------------
+
+	template<typename T>
+	const T&  stack<T>::top() {
+		if (empty() == -1) throw "Stack is empty";
+		return stack_array[top_idx];
 	}
 	//------------------------------------------------------------------------------------------------
 }
 //====================================================================================================
-#endif /* __DS_COMMON_PRIORITY_QUEUE_H__ */
+#endif /* __DS_COMMON_STACK_H__ */

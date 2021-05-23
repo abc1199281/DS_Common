@@ -18,16 +18,21 @@
 
 //====================================================================================================
 
+/*
+copy ..\x64\Release\DS_Common.lib D : \AfterPhD\Algorithm\DS_Common\lib\windows\DS_Common.lib
 
+copy ..\x64\Release\DS_Common.pdb D : \AfterPhD\Algorithm\DS_Common\bin\windows\DS_Common.pdb
+copy ..\x64\Release\DS_Common.dll D : \AfterPhD\Algorithm\DS_Common\bin\windows\DS_Common.dll
+*/
 /* Header */
 //====================================================================================================
 
 #include <iostream>
-#include <stack>
-#include <queue>
 #include <vector>
 #include <condition_variable>
 
+#include <DS_Common/Stack/stack.h>
+#include <DS_Common/Queue/queue.h>
 #include <DS_Common/LibSetting/LibSetting.h>
 //====================================================================================================
 
@@ -43,7 +48,7 @@ namespace DS_Common {
 	*
 	*/
 	template <class T>
-	struct BTreeNode
+	struct DS_COMMON_EXPORTS BTreeNode 
 	{
 		T val;
 		BTreeNode *left;
@@ -60,7 +65,6 @@ namespace DS_Common {
 
 /* Class */
 //====================================================================================================
-
 namespace DS_Common {
 	template<typename T>
 	class  BinaryTree
@@ -280,7 +284,7 @@ namespace DS_Common {
 			{
 				DestroyRecursive(node->left);
 				DestroyRecursive(node->right);
-				delete node;
+				//delete node;
 			}
 		}
 		//-----------------------------------------------------------------------------------------
@@ -351,7 +355,7 @@ namespace DS_Common {
 	void BinaryTree<T>::levelorder(BTreeNode<T>* root)
 	{
 		if (!root) return;
-		std::queue<BTreeNode<T>*> q;
+		queue<BTreeNode<T>*> q;
 		BTreeNode<T>* cur = root;
 		q.push(cur);
 		while (!q.empty())
@@ -403,7 +407,7 @@ namespace DS_Common {
 	void BinaryTree<T>::iterative_in_order(BTreeNode<T>* root)
 	{
 		if (!root) return;
-		std::stack<BTreeNode<T>*> stk;
+		stack<BTreeNode<T>*> stk;
 
 		BTreeNode<T>* cur=root;
 		while (1)
@@ -428,7 +432,7 @@ namespace DS_Common {
 	void BinaryTree<T>::iterative_pre_order(BTreeNode<T>* root)
 	{
 		if (!root) return;
-		std::stack<BTreeNode<T>*> stk;
+		stack<BTreeNode<T>*> stk;
 		BTreeNode<T>* cur = root;
 		stk.push(cur);
 		while (!stk.empty())
@@ -497,7 +501,7 @@ namespace DS_Common {
 	template<typename T>
 	void BinaryTree<T>::iterative_post_order(BTreeNode<T>* root)
 	{
-		std::stack<BTreeNode<T>*> stk;
+		stack<BTreeNode<T>*> stk;
 		BTreeNode<T>* last = nullptr;
 		BTreeNode<T>* cur = root;
 		while (cur || !stk.empty()) {

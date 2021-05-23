@@ -55,7 +55,7 @@ namespace T_BST {
 		std::cout << "BST remove " << std::endl;
 
 		int key = 3;
-		bool result = bst.remove_ele(key);
+		bool result = bst.remove(key);
 		std::cout << "delete result -== " << result << std::endl;
 		for (int i = 0; i < N; i++)
 		{

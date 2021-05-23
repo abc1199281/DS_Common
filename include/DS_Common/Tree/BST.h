@@ -23,8 +23,6 @@
 //====================================================================================================
 
 #include <iostream>
-#include <stack>
-#include <queue>
 #include <vector>
 #include <utility>
 #include <condition_variable>
@@ -40,7 +38,7 @@
 
 namespace DS_Common {
 	template<typename K, typename E>
-	class  BST
+	class  DS_COMMON_EXPORTS BST
 	{
 	
 	private: // variable
@@ -114,8 +112,8 @@ namespace DS_Common {
 		/*!
 		*  @brief      remove
 		*/
-		bool remove_ele(const K&k) {
-			remove_ele(this->root, k);
+		bool remove(const K&k) {
+			remove(this->root, k);
 			return true;
 		}
 		//-----------------------------------------------------------------------------------------
@@ -135,16 +133,19 @@ namespace DS_Common {
 		/*!
 		*  @brief      remove
 		*/
-		BTreeNode<BST_pair> * remove_ele(BTreeNode<BST_pair> *root, const K&k) {
+		BTreeNode<BST_pair> * remove(BTreeNode<BST_pair> *root, const K&k) {
 			if (!root) return nullptr;
 
 			if (k < root->val.first)
-				root->left = remove_ele(root->left, k);
+				root->left = remove(root->left, k);
 			else if (k > root->val.first)
-				root->right = remove_ele(root->right, k);
+				root->right = remove(root->right, k);
 			else {
 				if (root->left == nullptr && root->right == nullptr)
+				{
+					delete root;
 					return nullptr;
+				}
 				else if (root->left == nullptr)
 				{
 					BTreeNode<BST_pair>* p = root->right;
@@ -161,7 +162,7 @@ namespace DS_Common {
 
 				root->val.first = p->val.first;
 				root->val.second = p->val.second;
-				root->right = remove_ele(root->right,p->val.first);
+				root->right = remove(root->right,p->val.first);
 			}
 			return root;
 		}
@@ -172,24 +173,4 @@ namespace DS_Common {
 }
 //====================================================================================================
 
-
-/* Public Function */
-//====================================================================================================
-
-namespace DS_Common {
-	
-	//-----------------------------------------------------------------------------------------
-}
-//====================================================================================================
-
-
-
-/* Private Function */
-//====================================================================================================
-
-namespace DS_Common {
-	
-	//-----------------------------------------------------------------------------------------
-}
-//====================================================================================================
 #endif /* __DS_COMMON_BINARY_SEARCH_TREE_H__ */

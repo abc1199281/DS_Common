@@ -36,7 +36,7 @@ void TestBinaryTree()
 
 	basicTraversal(tmp);
 	IterativeTraversal(tmp);
-	StringConstructor();
+	//StringConstructor();
 	CopyConstructor();
 }
 //====================================================================================================
@@ -47,7 +47,7 @@ void TestBinaryTree()
 
 
 //-------------------------------------------------------------------------------------------------
-void cout_callback(BTreeNode<int>* cur) { std::cout << cur->val << std::endl; };
+void cout_callback(BTreeNode<int>* cur) { if(cur!=nullptr) std::cout << cur->val << std::endl; };
 void basicTraversal(BinaryTree<int>& tmp) {
 	tmp.set_callback(cout_callback);
 	std::cout << "in order" << std::endl;

@@ -8,8 +8,8 @@
 
 #include <DS_Common/Tree/BinaryTree.h>
 #include <DS_Common/Tree/BST.h>
-//#include <TestBinaryTree.h>
-//#include <TestPriorityQueue.h>
+#include <TestBinaryTree.h>
+#include <TestPriorityQueue.h>
 #include <TestBST.h>
 
 using namespace DS_Common;
@@ -20,9 +20,9 @@ using namespace DS_Common;
 //====================================================================================================
 int main(int argc, char ** argv)
 {
-	//TestBinaryTree();
-	//TestPriorityQueue();
-	TestBST();
+	TestBinaryTree();
+	TestPriorityQueue();
+	//TestBST();	
 
 	system("pause");
 	return 0;
