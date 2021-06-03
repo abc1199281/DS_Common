@@ -18,12 +18,6 @@
 
 //====================================================================================================
 
-/*
-copy ..\x64\Release\DS_Common.lib D : \AfterPhD\Algorithm\DS_Common\lib\windows\DS_Common.lib
-
-copy ..\x64\Release\DS_Common.pdb D : \AfterPhD\Algorithm\DS_Common\bin\windows\DS_Common.pdb
-copy ..\x64\Release\DS_Common.dll D : \AfterPhD\Algorithm\DS_Common\bin\windows\DS_Common.dll
-*/
 /* Header */
 //====================================================================================================
 

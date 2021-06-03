@@ -3,30 +3,27 @@
 
 /* Header */
 //====================================================================================================
-#include <iostream>
-#include <windows.h>
-
-#include <DS_Common/Tree/BinaryTree.h>
-#include <DS_Common/Tree/BST.h>
-#include <TestBinaryTree.h>
-#include <TestPriorityQueue.h>
-#include <TestBST.h>
-
-using namespace DS_Common;
+#include <DS_Common/Test/UnitTest.h>
+#include <string>
 //====================================================================================================
+
+
+#include <iostream>     // cout
+#include <math.h>       // acos
+#include <float.h>      // DBL_MAX
+#include <limits>       // numeric_limits
 
 
 /* Public Function */
 //====================================================================================================
+
 int main(int argc, char ** argv)
 {
-	TestBinaryTree();
-	TestPriorityQueue();
-	//TestBST();	
-
+	// create google UT.
+	testing::InitGoogleTest(&argc, argv);
+	RUN_ALL_TESTS();
 	system("pause");
 	return 0;
 }
 
 //====================================================================================================
-
