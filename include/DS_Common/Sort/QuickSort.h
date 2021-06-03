@@ -45,15 +45,15 @@ namespace DS_Common {
 		if (left < right)
 		{
 			int i = left;
-			int j = right + 1;
+			int j = right+1;
 			int pivot = a[left];
 
 			do {
 				do i++; while (a[i] < pivot);
-				do j--; while (a[j] < pivot);
+				do j--; while (a[j] > pivot);
 				if (i < j) std::swap(a[i],a[j]);
 			} while (i < j);
-			swap(a[left],a[j]);
+			std::swap(a[left],a[j]);
 
 			QuickSort(a, left, j-1);
 			QuickSort(a, j+1, right);

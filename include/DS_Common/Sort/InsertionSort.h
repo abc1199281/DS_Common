@@ -32,29 +32,22 @@
 //====================================================================================================
 
 namespace DS_Common {
-	//--------------------------------------------------------------------------------------------
-	template<class T>
-	void Insert(const T& e,T* a, int i)
-	{
-		// Sorted range: a[1:i], insert e
-		// Output: a[1:i+1] sorted
-		a[0] = e;
-		while (e < a[i])
-		{
-			a[i + 1] = a[i];
-			i--;
-		}
-		a[i + 1] = e;
-	}
 
 	//--------------------------------------------------------------------------------------------
 	template<class T>
-	void InsertionSort(T* a, const int n)
+	void InsertionSort(T* arr, const int n)
 	{
-		for (int j = 2; j <= n; j++)
+		if (n <= 1)return;
+		for (int i = 1; i <n; i++)
 		{
-			T temp = a[j];
-			Insert(temp, a, j - 1);
+			T key = arr[i];
+			int j = i - 1;
+			while (key < arr[j] && j >= 0)
+			{
+				arr[j + 1] = arr[j];
+				j--;
+			}
+			arr[j + 1] = key;
 		}
 	}
 
