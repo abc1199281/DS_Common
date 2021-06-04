@@ -52,7 +52,7 @@ namespace DS_Common {
 		*  @brief      Constructor
 		*
 		*/
-		PriorityQueue(int n = 1);
+		PriorityQueue(int n = 3); // n=1, 4 may cause resize error in low probability, why?
 		//-----------------------------------------------------------------------------------------
 		//-----------------------------------------------------------------------------------------
 		/*!
@@ -118,7 +118,15 @@ namespace DS_Common {
 
 		if (heapSize == heap.size())
 		{
-			heap.resize(2*heap.size());
+			//std::cout << "before"<<heapSize<<","<<heap.size();
+			try {
+				heap.resize(2 * heap.size());
+			}
+			catch (const char  * e)
+			{
+				std::cout << e << std::endl;
+			}
+			//std::cout << "after";
 		}
 		int curNode = ++heapSize;
 		while (curNode != 1 && heap[curNode / 2] < e) // bobbling up.

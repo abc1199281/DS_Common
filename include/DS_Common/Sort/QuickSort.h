@@ -41,7 +41,6 @@ namespace DS_Common {
 		// left as initial pivot, i, j for seperation sub string
 		// for any time, a[m]<= pivot, m<i, && a[m]>=pivot, m>j
 		// we assume a[left]<=a[right+1]
-
 		if (left < right)
 		{
 			int i = left;
@@ -49,8 +48,9 @@ namespace DS_Common {
 			int pivot = a[left];
 
 			do {
-				do i++; while (a[i] < pivot);
-				do j--; while (a[j] > pivot);
+				
+				do i++; while (a[i] < pivot && i<right);
+				do j--; while (a[j] > pivot && j>0);
 				if (i < j) std::swap(a[i],a[j]);
 			} while (i < j);
 			std::swap(a[left],a[j]);
