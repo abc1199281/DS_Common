@@ -97,7 +97,7 @@ namespace UnitTest {
 
 	//------------------------------------------------------------------------------------------------
 	TEST_F(TestSort, TestAvgCase) {
-
+		/*
 		std::vector<int> test_size = {5, 50, 100,1000,10000};
 		std::vector<int> repeated_loop = { 10000, 10000,10000,1000 ,100};
 
@@ -143,7 +143,8 @@ namespace UnitTest {
 				// HeapSort (std::priority_queue is roughly quick sort)
 				test_seq = copySeq();
 				timer->start();
-				DS_Common::HeapSort(test_seq, seq_size); // sort
+				//DS_Common::HeapSort(test_seq, seq_size); // sort insert and delete 2*O(nlogn)
+				DS_Common::HeapSortNaive(test_seq, seq_size); // sort
 				elapsed_time[2] += timer->getMicroSec();
 				EXPECT_TRUE(isSorted(test_seq, seq_size));
 				free(test_seq); test_seq = NULL;
@@ -165,7 +166,7 @@ namespace UnitTest {
 				std::cout << "elapsed_time of " << k << " : " << elapsed_time[k] << std::endl;;
 			}
 			std::cout << std::endl;
-		}	
+		}	*/
 	}
 
 	//------------------------------------------------------------------------------------------------

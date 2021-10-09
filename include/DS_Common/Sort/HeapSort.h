@@ -25,7 +25,6 @@
 
 #include <DS_Common/Common/Common.h>
 #include <DS_Common/LibSetting/LibSetting.h>
-#include <queue>
 #include <DS_Common/Queue/PriorityQueue.h>
 //====================================================================================================
 
@@ -39,17 +38,33 @@ namespace DS_Common {
 	int Adjust(T* a, const int root, const int n)
 	{
 		T e = a[root];
-		for (int j = 2 * root; j <= n; j *= 2)
+		int j;
+		for (j = 2 * root; j <= n; j *= 2)
 		{
 			if (j < n && a[j] < a[j + 1]) j++;
-
+			if (e >= a[j]) break;
+			a[j / 2] = a[j];
+		}
+		a[j / 2] = e;
+		return 1;
+	}
+	//--------------------------------------------------------------------------------------------
+	template<class T>
+	void HeapSortNaive(T* a, const int n)
+	{
+		int i;
+		for (i = n / 2; i >= 1; i--)
+			Adjust(a, i, n);
+		for (i = n - 1; i >= 1; i--)
+		{
+			std::swap(a[1],a[i+1]);
+			Adjust(a, 1, i);
 		}
 	}
 	//--------------------------------------------------------------------------------------------
 	template<class T>
 	void HeapSort(T* a, const int n)
 	{
-		//std::priority_queue<T> q;
 		PriorityQueue<T> * q=new PriorityQueue<T>();
 		for (int i = 0; i < n; i++)
 		{
