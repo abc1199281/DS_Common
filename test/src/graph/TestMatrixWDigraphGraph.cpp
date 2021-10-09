@@ -4,28 +4,29 @@
 //====================================================================================================
 #include <iostream>
 #include <string>
+#include <memory>
 
 #include <DS_Common/Test/UnitTest.h>
 
-#include <DS_Common/Time/Timer.h>
+#include <DS_Common/Graph/MatrixWDigraph.h>
 //====================================================================================================
 
 
 /* Definition */
 //====================================================================================================
 namespace UnitTest {
-	class TestGraph :public UnitTest::Test {
+	class TestMatrixWDigraph :public UnitTest::Test {
 	protected:
-        std::string MODULE_NAME = "Time";
-		DS_Common::Time::Timer *timer;
+        std::string MODULE_NAME = "Graph";
+		std::shared_ptr<DS_Common::MatrixWDigraph> matrix_w_digraph;
 		virtual void SetUp()
 		{
-			timer = new DS_Common::Time::Timer();
+			this->update(MODULE_NAME);
+			matrix_w_digraph = std::make_shared<DS_Common::MatrixWDigraph>();
 		}
 
 		virtual void TearDown()
 		{
-			timer->~Timer();
 		}
 	};
 }
@@ -37,32 +38,16 @@ namespace UnitTest {
 namespace UnitTest {
 
 	//------------------------------------------------------------------------------------------------
-	TEST_F(TestGraph, Timer_getSec) {
-		std::cout <<"initial timer is (ms) " << timer->getMSec() <<
-					", (sec) "<< timer->getSec() << std::endl;
-		
-		// just elapse time.
+	TEST_F(TestMatrixWDigraph, load_data) {
+		std::string loaded_file = TestMatrixWDigraph::DATA_PATH + "\\WDigraph_6_26.txt";
+		std::cout << loaded_file <<std::endl;
+
+
+
+		matrix_w_digraph->LoadFile(loaded_file);
+
+
 		system("pause");
-
-		std::cout << "current timer is (ms) " << timer->getMSec() <<
-					 ", (sec) " << timer->getSec() << std::endl;
-	}
-
-	//------------------------------------------------------------------------------------------------
-
-	TEST_F(TestGraph, Timer_start) {
-		
-		std::cout << "initial timer is (ms) " << timer->getMSec() <<
-			", (sec) " << timer->getSec() << std::endl;
-
-		// just elapse time.
-		system("pause");
-
-		std::cout << "current timer is (ms) " << timer->getMSec() <<
-			", (sec) " << timer->getSec() << std::endl;
-		timer->start();
-		std::cout << "current timer after start() is (ms) " << timer->getMSec() <<
-			", (sec) " << timer->getSec() << std::endl;
 	}
 
 	//------------------------------------------------------------------------------------------------

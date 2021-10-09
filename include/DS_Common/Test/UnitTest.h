@@ -105,10 +105,10 @@ namespace UnitTest {
 		*
 		*  @param[in]  MODULE_NAME   The post-fix module name.
 		*/
-		void update(std::string MODULE_NAME, std::string SOLUTIOON_NAME="BIO-Common") {
+		void update(std::string MODULE_NAME, std::string SOLUTIOON_NAME="DS_Common") {
             std::string slash = "\\";
-			DATA_PATH =   ".." + slash + ".." + slash + ".." + slash + SOLUTIOON_NAME + slash + "test" + slash + "data"   + slash + MODULE_NAME;
-			OUTPUT_PATH = ".." + slash + ".." + slash + ".." + slash + SOLUTIOON_NAME + slash + "test" + slash + "output" + slash + MODULE_NAME;
+			DATA_PATH =   ".." + slash + ".." + slash + ".." + slash + ".." + slash + SOLUTIOON_NAME + slash + "test" + slash + "data"   + slash + MODULE_NAME;
+			OUTPUT_PATH = ".." + slash + ".." + slash + ".." + slash + ".." + slash + SOLUTIOON_NAME + slash + "test" + slash + "output" + slash + MODULE_NAME;
 		}
 		//------------------------------------------------------------------------------------------------
 	};
