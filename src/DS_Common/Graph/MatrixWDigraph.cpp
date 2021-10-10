@@ -340,5 +340,47 @@ namespace DS_Common {
 	}
 	//------------------------------------------------------------------------------------------------
 	//------------------------------------------------------------------------------------------------
+
+	std::vector<std::vector<double>> MatrixWDigraph::shortest_all_path()
+	{
+		std::vector<std::vector<double>> a(numVer, std::vector<double>(numVer,0));
+
+		for (int i = 0; i < numVer; i++)
+		{
+			for (int j = 0; j < numVer; j++)
+			{
+				if (adj_edge[i][j] == 1 || i==j)
+					a[i][j] = adj_weight[i][j];
+				else
+					a[i][j] = INT_MAX;
+			}
+		}
+
+		for (int k = 0; k < numVer; k++)
+		{
+			for (int i = 0; i < numVer; i++)
+			{
+				for (int j = 0; j < numVer; j++)
+				{
+					if ((a[i][k] + a[k][j]) < a[i][j])
+						a[i][j] = a[i][k] + a[k][j];
+				}
+			}
+			//Debug
+			/*
+			std::cout << "Iter:" << k << std::endl;
+			for (int i = 0; i < numVer; i++)
+			{
+				for (int j = 0; j < numVer; j++)
+				{
+					std::cout << a[i][j] << ",";
+				}
+				std::cout << std::endl;
+			}*/
+		}
+		return a;
+	}
+	//------------------------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------------------------
 }
 //====================================================================================================

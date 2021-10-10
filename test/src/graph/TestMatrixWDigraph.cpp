@@ -120,5 +120,26 @@ namespace UnitTest {
 		}
 	}
 	//------------------------------------------------------------------------------------------------
+
+	//------------------------------------------------------------------------------------------------
+	TEST_F(TestMatrixWDigraph, 6_4_3_shortest_all_path) {
+		std::string loaded_file = TestMatrixWDigraph::DATA_PATH + "\\WDigraph_6_32.txt";
+		std::cout << loaded_file << std::endl;
+
+		matrix_w_digraph->LoadFile(loaded_file);
+		std::vector<std::vector<double>> a = matrix_w_digraph->shortest_all_path();
+
+		int numVer = matrix_w_digraph->NumberOfVertices();
+
+		for (int i = 0; i < numVer; i++)
+		{
+			for (int j = 0; j < numVer; j++)
+			{
+				std::cout << a[i][j]<<",";
+			}
+			std::cout << std::endl;
+		}
+	}
+	//------------------------------------------------------------------------------------------------
 }
 //====================================================================================================
