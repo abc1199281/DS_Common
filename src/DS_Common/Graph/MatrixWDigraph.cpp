@@ -10,6 +10,7 @@
 #include <queue>
 
 #include <DS_Common/Graph/MatrixWDigraph.h>
+#include <DS_Common/Set/DisjointSetArray.h>
 //====================================================================================================
 
 /* Private Mmeber */
@@ -105,7 +106,7 @@ namespace DS_Common {
 				if (is_directional == 0)
 				{
 					this->adj_edge[b][a] = 1;
-					this->adj_weight[a][b] = cost;
+					this->adj_weight[b][a] = cost;
 				}
 				//std::cout << "Add V: " << a << "& " << b << ", cost" << cost << std::endl;
 			}else {
@@ -115,7 +116,7 @@ namespace DS_Common {
 				if (is_directional == 0)
 				{
 					this->adj_edge[b][a] = 1;
-					this->adj_weight[a][b] = 1;
+					this->adj_weight[b][a] = 1;
 				}					
 				//std::cout << "Add V: " << a << "& " << b << std::endl;
 			}
@@ -135,7 +136,7 @@ namespace DS_Common {
 	{
 		if (u > numVer || v > numVer)
 		{
-			std::cout << "warning: out of range. " << std::endl;
+			std::cout << "warning: out of range. u:"<<u <<", v:"<<v<<",num of V:"<< numVer << std::endl;
 			return;
 		}
 		adj_edge[u][v] = 1;
@@ -249,18 +250,6 @@ namespace DS_Common {
 		}
 		delete visited;
 	}
-	//------------------------------------------------------------------------------------------------
-}
-//====================================================================================================
-
-
-
-/* Private Function */
-//====================================================================================================
-
-namespace DS_Common {
-	//------------------------------------------------------------------------------------------------
-
 	//------------------------------------------------------------------------------------------------
 }
 //====================================================================================================

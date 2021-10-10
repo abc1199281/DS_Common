@@ -75,9 +75,7 @@ namespace UnitTest {
 	//------------------------------------------------------------------------------------------------
 
 	//------------------------------------------------------------------------------------------------
-	TEST_F(TestMatrixWDigraph, 6_2_3_Components) {
-		int u = 0, v = 1;
-
+	TEST_F(TestMatrixWDigraph, 6_2_3_Components) {		
 		std::string loaded_file = TestMatrixWDigraph::DATA_PATH + "\\graph_6_17_plus.txt";
 		std::cout << loaded_file << std::endl;
 
