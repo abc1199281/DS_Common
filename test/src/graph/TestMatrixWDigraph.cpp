@@ -85,5 +85,25 @@ namespace UnitTest {
 
 	}
 	//------------------------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------------------------
+	TEST_F(TestMatrixWDigraph, 6_4_1_shortest_path) {
+		std::string loaded_file = TestMatrixWDigraph::DATA_PATH + "\\WDigraph_6_26.txt";
+		std::cout << loaded_file << std::endl;
+
+		matrix_w_digraph->LoadFile(loaded_file);
+
+		std::cout <<"Shortest from 0 to 1 in Graph 6.26: "<< matrix_w_digraph->shortest_path_Dijkstras(0, 1) << std::endl;
+
+		loaded_file = TestMatrixWDigraph::DATA_PATH + "\\WDigraph_6_27.txt";
+		std::cout << loaded_file << std::endl;
+
+		matrix_w_digraph->LoadFile(loaded_file);
+
+		for (int i = 0; i < 8; i++)
+		{
+			std::cout << "Shortest from 4 to "<<i<<" in Graph 6.27: " << matrix_w_digraph->shortest_path_Dijkstras(4, i) << std::endl;
+		}
+	}
+	//------------------------------------------------------------------------------------------------
 }
 //====================================================================================================

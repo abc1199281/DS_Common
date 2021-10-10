@@ -31,8 +31,11 @@ Practice is the best way to confirm what you have learnt.
 	3. minimal cost spanning tree
 		1. [6.3.1 Kruskal](test/src/graph/TestMatrixWGraph.cpp)
 		2. [6.3.2 Prim](test/src/graph/TestMatrixWGraph.cpp)
-		3. [6.3.3 Sollin](test/src/graph/TestMatrixWGraph.cpp)
+		3. 6.3.3 Sollin
 	4. Shortest path and transitive closure
+		1. [6.4.1 single src, all dest, no negative weight, Dijkstras](test/src/graph/TestMatrixWGraph.cpp)
+		2. [6.4.2 single src, all dest, general weight, BellmanFord](test/src/graph/TestMatrixWGraph.cpp)
+		3. 6.4.3 all pairs shortest path
 7. Sort
 8. Hashing
 9. Priority Queue

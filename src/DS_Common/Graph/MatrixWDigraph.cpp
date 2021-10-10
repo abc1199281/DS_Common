@@ -251,5 +251,45 @@ namespace DS_Common {
 		delete visited;
 	}
 	//------------------------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------------------------
+
+	double MatrixWDigraph::shortest_path_Dijkstras(const int src, const int dest)
+	{
+		
+		std::priority_queue<std::pair<double, int>> edges_heap; //dist, vertice
+		std::vector<double> dist(numVer, INT_MAX);
+
+
+		edges_heap.push({ 0, src}); // dist of src = 0
+		dist[src] = 0;
+
+		while (!edges_heap.empty())
+		{
+			int current_dist = -1*edges_heap.top().first;
+			int v = edges_heap.top().second;
+
+			edges_heap.pop();
+
+			for (int i = 0; i < numVer; i++)
+			{
+				if (adj_edge[v][i] == 1)
+				{
+					if (current_dist + adj_weight[v][i] < dist[i])
+					{
+						dist[i] = current_dist + adj_weight[v][i];
+						edges_heap.push({ -1 * dist[i], i});
+					}
+				}
+			}
+
+		}
+		
+		if (dist[dest] != INT_MAX)
+			return dist[dest];
+		else
+			return -1;
+	}
+	//------------------------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------------------------
 }
 //====================================================================================================
