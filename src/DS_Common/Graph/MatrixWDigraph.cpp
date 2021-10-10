@@ -199,9 +199,21 @@ namespace DS_Common {
 	}
 	//------------------------------------------------------------------------------------------------
 
-	void MatrixWDigraph::DFS_share_visit(const int v)
+	bool MatrixWDigraph::DFS_share_visit(const int v)
 	{
-		if (v > numVer) return;
+		// http://web.ntnu.edu.tw/~algo/DirectedAcyclicGraph.html
+		// for checking cycle, visited should be added?
+		if (v > numVer) {
+			std::cout << "Out of range" << std::endl;
+			return false;
+		}
+		if (visited[v] == true && visited_cycle_check[v] == false)
+		{
+			std::cout << "There is circle" << std::endl;
+			return false;
+		}
+		else if (visited[v])
+			return true;
 
 		visit_call_back_func(v);
 		visited[v] = true;
@@ -210,12 +222,12 @@ namespace DS_Common {
 		{
 			if (this->adj_edge[v][w] == 1)
 			{
-				if (!visited[w])
-				{
-					DFS_share_visit(w);
-				}
+				if(!DFS_share_visit(w))
+					return false;				
 			}			
 		}
+		visited_cycle_check[v] = true;
+		return true;
 	}
 	//------------------------------------------------------------------------------------------------
 
@@ -380,6 +392,42 @@ namespace DS_Common {
 		}
 		return a;
 	}
+	//------------------------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------------------------
+
+	std::vector<int> MatrixWDigraph::topological_sort()
+	{
+		visited = new bool[numVer];
+		visited_cycle_check = new bool[numVer];
+		for (int i = 0; i < numVer; i++)
+		{
+			visited[i] = false;
+			visited_cycle_check[i] = false;
+		}
+			
+		
+		std::vector<int> topological_order;
+		SetCallBack([&](const int cur_v)-> void {topological_order.push_back(cur_v); });
+
+		for (int i = 0; i < numVer; ++i) {
+			if (!visited[i]) {
+				if (!DFS_share_visit(i))
+				{
+					std::cout << "There is cycle, no topological order." << std::endl;
+					return std::vector<int>();
+				}
+					
+			}
+		}
+
+		//reverse(topological_order.begin(), topological_order.end());
+
+		SetCallBack([](const int cur_v)-> void {std::cout << "Visited V:" << cur_v << std::endl; });
+		delete visited;
+		delete visited_cycle_check;
+		return topological_order;
+	}
+
 	//------------------------------------------------------------------------------------------------
 	//------------------------------------------------------------------------------------------------
 }

@@ -141,5 +141,36 @@ namespace UnitTest {
 		}
 	}
 	//------------------------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------------------------
+	TEST_F(TestMatrixWDigraph, 6_5_1_ActivityOnVertice_TopologicalOrder) {
+		std::string loaded_file = TestMatrixWDigraph::DATA_PATH + "\\graph_6_37.txt";
+		std::cout << loaded_file << std::endl;
+
+		matrix_w_digraph->LoadFile(loaded_file);
+		std::vector<int> topological_sorted = matrix_w_digraph->topological_sort();
+
+		int numVer = matrix_w_digraph->NumberOfVertices();
+		std::cout << "Topological Sorted" << std::endl;
+		for (int i = 0; i < topological_sorted.size(); i++)
+		{
+			std::cout << topological_sorted[i]<<",";
+		}
+		std::cout << std::endl;
+
+		loaded_file = TestMatrixWDigraph::DATA_PATH + "\\graph_6_37_cycle.txt";
+		std::cout << loaded_file << std::endl;
+
+		matrix_w_digraph->LoadFile(loaded_file);
+		topological_sorted = matrix_w_digraph->topological_sort();
+
+		
+		std::cout << "Topological Sorted" << std::endl;
+		for (int i = 0; i < topological_sorted.size(); i++)
+		{
+			std::cout << topological_sorted[i] << ",";
+		}
+		std::cout << std::endl;
+	}
+	//------------------------------------------------------------------------------------------------
 }
 //====================================================================================================
