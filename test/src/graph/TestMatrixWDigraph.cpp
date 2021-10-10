@@ -86,7 +86,7 @@ namespace UnitTest {
 	}
 	//------------------------------------------------------------------------------------------------
 	//------------------------------------------------------------------------------------------------
-	TEST_F(TestMatrixWDigraph, 6_4_1_shortest_path) {
+	TEST_F(TestMatrixWDigraph, 6_4_1_shortest_path_Dijkstras) {
 		std::string loaded_file = TestMatrixWDigraph::DATA_PATH + "\\WDigraph_6_26.txt";
 		std::cout << loaded_file << std::endl;
 
@@ -102,6 +102,21 @@ namespace UnitTest {
 		for (int i = 0; i < 8; i++)
 		{
 			std::cout << "Shortest from 4 to "<<i<<" in Graph 6.27: " << matrix_w_digraph->shortest_path_Dijkstras(4, i) << std::endl;
+		}
+	}
+	//------------------------------------------------------------------------------------------------
+
+	//------------------------------------------------------------------------------------------------
+	TEST_F(TestMatrixWDigraph, 6_4_2_shortest_path_BellmanFord) {		
+		std::string loaded_file = TestMatrixWDigraph::DATA_PATH + "\\WDigraph_6_31.txt";
+		std::cout << loaded_file << std::endl;
+
+		matrix_w_digraph->LoadFile(loaded_file);
+
+		for (int i = 0; i < 7; i++)
+		{
+			std::cout << "Shortest from 0 to " << i << " in Graph 6.31: "
+				<< matrix_w_digraph->shortest_path_BellmanFord(0, i) << std::endl;
 		}
 	}
 	//------------------------------------------------------------------------------------------------

@@ -251,6 +251,54 @@ namespace DS_Common {
 		delete visited;
 	}
 	//------------------------------------------------------------------------------------------------
+	double MatrixWDigraph::shortest_path_BellmanFord(const int src, const int dest)
+	{
+		std::priority_queue<std::pair<double, int>> edges_heap; //dist, vertice
+		std::vector<double> dist(numVer, INT_MAX);
+
+		// initialize dist
+		dist[src] = 0;
+		for (int i = 0; i < numVer; i++)
+		{
+			if (adj_edge[src][i] == 1)
+				dist[i] = adj_weight[src][i];
+		}
+
+		// debug
+		/*
+		std::cout << "iter:" << 1;
+		for (int i = 0; i < numVer; i++)
+			std::cout << ", dist[" << i << "]:" << dist[i];
+		std::cout << std::endl;
+		*/
+
+		// relax (numVer-1 times)
+		for (int k=2; k <=numVer - 1; k++)
+		{
+			for (int i = 0; i < numVer; i++) // each edge
+			{
+				for (int j = 0; j < numVer; j++) // each edge
+				{
+					if (adj_edge[i][j] == 1)
+					{
+						if (dist[j] > dist[i] + adj_weight[i][j])
+							dist[j] = dist[i] + adj_weight[i][j];
+					}
+				}
+			}
+
+			// debug
+			/*std::cout << "iter:" << k;
+			for (int i = 0; i < numVer; i++)
+				std::cout << ", dist[" << i << "]:" << dist[i];
+			std::cout << std::endl;*/
+		}
+
+		if (dist[dest] != INT_MAX)
+			return dist[dest];
+		else
+			return -1;
+	}
 	//------------------------------------------------------------------------------------------------
 
 	double MatrixWDigraph::shortest_path_Dijkstras(const int src, const int dest)
@@ -259,6 +307,7 @@ namespace DS_Common {
 		std::priority_queue<std::pair<double, int>> edges_heap; //dist, vertice
 		std::vector<double> dist(numVer, INT_MAX);
 
+		std::vector<bool> marked(numVer, false);
 
 		edges_heap.push({ 0, src}); // dist of src = 0
 		dist[src] = 0;
@@ -272,7 +321,7 @@ namespace DS_Common {
 
 			for (int i = 0; i < numVer; i++)
 			{
-				if (adj_edge[v][i] == 1)
+				if (adj_edge[v][i] == 1 && marked[i]==false)
 				{
 					if (current_dist + adj_weight[v][i] < dist[i])
 					{
@@ -281,7 +330,7 @@ namespace DS_Common {
 					}
 				}
 			}
-
+			marked[v] == true;
 		}
 		
 		if (dist[dest] != INT_MAX)
