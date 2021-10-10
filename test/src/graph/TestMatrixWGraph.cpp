@@ -59,7 +59,18 @@ namespace UnitTest {
 
 		matrix_w_graph->LoadFile(loaded_file);
 
-		std::shared_ptr<DS_Common::MatrixWGraph> result = matrix_w_graph->kruskal_MST();
+		std::shared_ptr<DS_Common::MatrixWGraph> result = matrix_w_graph->Kruskal_MST();
+
+		result->DFS(0);
+	}
+	//------------------------------------------------------------------------------------------------
+	TEST_F(TestMatrixWGraph, 6_3_1_Prim_MinSpanningTree) {
+		std::string loaded_file = TestMatrixWGraph::DATA_PATH + "\\Wgraph_6_23.txt";
+		std::cout << loaded_file << std::endl;
+
+		matrix_w_graph->LoadFile(loaded_file);
+
+		std::shared_ptr<DS_Common::MatrixWGraph> result = matrix_w_graph->Prim_MST();
 
 		result->DFS(0);
 	}
