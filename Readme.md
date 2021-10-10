@@ -31,8 +31,15 @@ Practice is the best way to confirm what you have learnt.
 	3. minimal cost spanning tree
 		1. [6.3.1 Kruskal](test/src/graph/TestMatrixWGraph.cpp)
 		2. [6.3.2 Prim](test/src/graph/TestMatrixWGraph.cpp)
-		3. [6.3.3 Sollin](test/src/graph/TestMatrixWGraph.cpp)
+		3. 6.3.3 Sollin
 	4. Shortest path and transitive closure
+		1. [6.4.1 Dijkstras: single src, all dest, no negative weight](test/src/graph/TestMatrixWDigraph.cpp)
+		2. [6.4.2 BellmanFord: single src, all dest, general weight](test/src/graph/TestMatrixWDigraph.cpp)
+		3. [6.4.3 all pairs shortest path](test/src/graph/TestMatrixWDigraph.cpp)
+		4. transitive closure
+	5. Activity networks
+		1. [6.5.1 activity on vertex, AOV, TopologicalOrder](test/src/graph/TestMatrixWDigraph.cpp)
+		2. activity on edge, AOE
 7. Sort
 8. Hashing
 9. Priority Queue
@@ -40,7 +47,7 @@ Practice is the best way to confirm what you have learnt.
 11. multi-path search tree
 12. Appendix: Others
 	1. Set
-		1. [DisjointSet](test/src/set/TestDisjointSetArray.cpp)
+		1. [Disjoint Set in Array](test/src/set/TestDisjointSetArray.cpp)
 
 
 ## Licenses

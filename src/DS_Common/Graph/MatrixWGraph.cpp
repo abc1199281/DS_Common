@@ -73,7 +73,7 @@ namespace DS_Common {
 
 	//------------------------------------------------------------------------------------------------
 
-	std::shared_ptr<MatrixWGraph> MatrixWGraph::kruskal_MST()
+	std::shared_ptr<MatrixWGraph> MatrixWGraph::Kruskal_MST()
 	{
 		typedef  std::pair<int, int> iPair;
 		//DS_Common::PriorityQueue<std::pair<double, iPair>> edges_heap;
@@ -112,6 +112,65 @@ namespace DS_Common {
 		return MinSpanningTree;
 	}
 	//------------------------------------------------------------------------------------------------
+
+	std::shared_ptr<MatrixWGraph> MatrixWGraph::Prim_MST()
+	{
+		typedef  std::pair<double, std::pair<int, int>> iPair;	// weight, <from, to>
+		std::priority_queue< iPair> node_heap; 
+
+		std::vector<bool> marked(numVer, false);
+		int minimum_cost = 0;
+		int cnt_edge = 0;
+
+		std::shared_ptr<MatrixWGraph> MinSpanningTree = std::make_shared<MatrixWGraph>(this->numVer);
+		
+		int from = 0, to =0, cost=0;
+		node_heap.push({ 0.0, {from, to}});
+		while (!node_heap.empty())
+		{
+			iPair p= node_heap.top();
+			node_heap.pop();
+
+			cost = -1*p.first;
+			from = p.second.first;
+			to = p.second.second;
+
+			if (marked[to] == true) // Easy check cycle by visited
+			{
+				continue;
+			}
+
+			minimum_cost += cost;
+			marked[to] = true;			
+
+			if (from != to) // skip initial condition
+			{
+				cnt_edge++;
+				std::cout << "Prim MST Add u:" << from << ",v:" << to << ",cost:" << cost << std::endl;
+				MinSpanningTree->InsertEdge(from, to, cost);
+			}
+
+			for (int i = 0; i < numVer;i++) {
+				if (adj_edge[to][i] == 1 && to!=i)
+				{
+					if (marked[i] == false)
+					{
+						node_heap.push({ -1 * adj_weight[to][i], {to, i} });
+					}
+				}
+			}
+		}
+
+		if (cnt_edge < numVer - 1)
+		{
+			std::cout << "No spanning tree, return empty tree" << std::endl;
+			return std::make_shared<MatrixWGraph>(this->numVer);
+		}
+		else
+			return MinSpanningTree;
+	}
+	//------------------------------------------------------------------------------------------------
+
 }
 //====================================================================================================
 

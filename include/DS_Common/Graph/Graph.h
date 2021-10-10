@@ -54,6 +54,7 @@ namespace DS_Common {
 		int is_directional;
 	
 		bool * visited;
+		bool * visited_cycle_check;
 
 		using visit_callback = std::function< void(const int cur_v) >;
 		visit_callback visit_call_back_func;
@@ -191,10 +192,10 @@ namespace DS_Common {
 
 		//-----------------------------------------------------------------------------------------
 		/*!
-		*  @brief      depth first traversal share_visit
+		*  @brief      depth first traversal share_visit, cycle check is also included.
 		*
 		*/
-		virtual void DFS_share_visit(const int v) = 0;
+		virtual bool DFS_share_visit(const int v) = 0;
 		//-----------------------------------------------------------------------------------------
 
 		//-----------------------------------------------------------------------------------------
@@ -205,7 +206,9 @@ namespace DS_Common {
 		void Components()
 		{
 			visited = new bool[numVer];
+			visited_cycle_check = new bool[numVer];
 			std::fill(visited, visited + numVer, false);
+			std::fill(visited_cycle_check, visited_cycle_check + numVer, false);
 
 			int numComponent = 0;
 			for (int i = 0; i < numVer; i++)
@@ -217,6 +220,7 @@ namespace DS_Common {
 				}
 			}
 			delete visited;
+			delete visited_cycle_check;
 		}
 		//-----------------------------------------------------------------------------------------
 

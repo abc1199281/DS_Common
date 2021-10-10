@@ -199,9 +199,21 @@ namespace DS_Common {
 	}
 	//------------------------------------------------------------------------------------------------
 
-	void MatrixWDigraph::DFS_share_visit(const int v)
+	bool MatrixWDigraph::DFS_share_visit(const int v)
 	{
-		if (v > numVer) return;
+		// http://web.ntnu.edu.tw/~algo/DirectedAcyclicGraph.html
+		// for checking cycle, visited should be added?
+		if (v > numVer) {
+			std::cout << "Out of range" << std::endl;
+			return false;
+		}
+		if (visited[v] == true && visited_cycle_check[v] == false)
+		{
+			std::cout << "There is circle" << std::endl;
+			return false;
+		}
+		else if (visited[v])
+			return true;
 
 		visit_call_back_func(v);
 		visited[v] = true;
@@ -210,12 +222,12 @@ namespace DS_Common {
 		{
 			if (this->adj_edge[v][w] == 1)
 			{
-				if (!visited[w])
-				{
-					DFS_share_visit(w);
-				}
+				if(!DFS_share_visit(w))
+					return false;				
 			}			
 		}
+		visited_cycle_check[v] = true;
+		return true;
 	}
 	//------------------------------------------------------------------------------------------------
 
@@ -250,6 +262,173 @@ namespace DS_Common {
 		}
 		delete visited;
 	}
+	//------------------------------------------------------------------------------------------------
+	double MatrixWDigraph::shortest_path_BellmanFord(const int src, const int dest)
+	{
+		std::priority_queue<std::pair<double, int>> edges_heap; //dist, vertice
+		std::vector<double> dist(numVer, INT_MAX);
+
+		// initialize dist
+		dist[src] = 0;
+		for (int i = 0; i < numVer; i++)
+		{
+			if (adj_edge[src][i] == 1)
+				dist[i] = adj_weight[src][i];
+		}
+
+		// debug
+		/*
+		std::cout << "iter:" << 1;
+		for (int i = 0; i < numVer; i++)
+			std::cout << ", dist[" << i << "]:" << dist[i];
+		std::cout << std::endl;
+		*/
+
+		// relax (numVer-1 times)
+		for (int k=2; k <=numVer - 1; k++)
+		{
+			for (int i = 0; i < numVer; i++) // each edge
+			{
+				for (int j = 0; j < numVer; j++) // each edge
+				{
+					if (adj_edge[i][j] == 1)
+					{
+						if (dist[j] > dist[i] + adj_weight[i][j])
+							dist[j] = dist[i] + adj_weight[i][j];
+					}
+				}
+			}
+
+			// debug
+			/*std::cout << "iter:" << k;
+			for (int i = 0; i < numVer; i++)
+				std::cout << ", dist[" << i << "]:" << dist[i];
+			std::cout << std::endl;*/
+		}
+
+		if (dist[dest] != INT_MAX)
+			return dist[dest];
+		else
+			return -1;
+	}
+	//------------------------------------------------------------------------------------------------
+
+	double MatrixWDigraph::shortest_path_Dijkstras(const int src, const int dest)
+	{
+		
+		std::priority_queue<std::pair<double, int>> edges_heap; //dist, vertice
+		std::vector<double> dist(numVer, INT_MAX);
+
+		std::vector<bool> marked(numVer, false);
+
+		edges_heap.push({ 0, src}); // dist of src = 0
+		dist[src] = 0;
+
+		while (!edges_heap.empty())
+		{
+			int current_dist = -1*edges_heap.top().first;
+			int v = edges_heap.top().second;
+
+			edges_heap.pop();
+
+			for (int i = 0; i < numVer; i++)
+			{
+				if (adj_edge[v][i] == 1 && marked[i]==false)
+				{
+					if (current_dist + adj_weight[v][i] < dist[i])
+					{
+						dist[i] = current_dist + adj_weight[v][i];
+						edges_heap.push({ -1 * dist[i], i});
+					}
+				}
+			}
+			marked[v] == true;
+		}
+		
+		if (dist[dest] != INT_MAX)
+			return dist[dest];
+		else
+			return -1;
+	}
+	//------------------------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------------------------
+
+	std::vector<std::vector<double>> MatrixWDigraph::shortest_all_path()
+	{
+		std::vector<std::vector<double>> a(numVer, std::vector<double>(numVer,0));
+
+		for (int i = 0; i < numVer; i++)
+		{
+			for (int j = 0; j < numVer; j++)
+			{
+				if (adj_edge[i][j] == 1 || i==j)
+					a[i][j] = adj_weight[i][j];
+				else
+					a[i][j] = INT_MAX;
+			}
+		}
+
+		for (int k = 0; k < numVer; k++)
+		{
+			for (int i = 0; i < numVer; i++)
+			{
+				for (int j = 0; j < numVer; j++)
+				{
+					if ((a[i][k] + a[k][j]) < a[i][j])
+						a[i][j] = a[i][k] + a[k][j];
+				}
+			}
+			//Debug
+			/*
+			std::cout << "Iter:" << k << std::endl;
+			for (int i = 0; i < numVer; i++)
+			{
+				for (int j = 0; j < numVer; j++)
+				{
+					std::cout << a[i][j] << ",";
+				}
+				std::cout << std::endl;
+			}*/
+		}
+		return a;
+	}
+	//------------------------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------------------------
+
+	std::vector<int> MatrixWDigraph::topological_sort()
+	{
+		visited = new bool[numVer];
+		visited_cycle_check = new bool[numVer];
+		for (int i = 0; i < numVer; i++)
+		{
+			visited[i] = false;
+			visited_cycle_check[i] = false;
+		}
+			
+		
+		std::vector<int> topological_order;
+		SetCallBack([&](const int cur_v)-> void {topological_order.push_back(cur_v); });
+
+		for (int i = 0; i < numVer; ++i) {
+			if (!visited[i]) {
+				if (!DFS_share_visit(i))
+				{
+					std::cout << "There is cycle, no topological order." << std::endl;
+					return std::vector<int>();
+				}
+					
+			}
+		}
+
+		//reverse(topological_order.begin(), topological_order.end());
+
+		SetCallBack([](const int cur_v)-> void {std::cout << "Visited V:" << cur_v << std::endl; });
+		delete visited;
+		delete visited_cycle_check;
+		return topological_order;
+	}
+
+	//------------------------------------------------------------------------------------------------
 	//------------------------------------------------------------------------------------------------
 }
 //====================================================================================================

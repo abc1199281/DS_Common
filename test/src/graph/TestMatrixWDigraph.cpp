@@ -85,5 +85,92 @@ namespace UnitTest {
 
 	}
 	//------------------------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------------------------
+	TEST_F(TestMatrixWDigraph, 6_4_1_shortest_path_Dijkstras) {
+		std::string loaded_file = TestMatrixWDigraph::DATA_PATH + "\\WDigraph_6_26.txt";
+		std::cout << loaded_file << std::endl;
+
+		matrix_w_digraph->LoadFile(loaded_file);
+
+		std::cout <<"Shortest from 0 to 1 in Graph 6.26: "<< matrix_w_digraph->shortest_path_Dijkstras(0, 1) << std::endl;
+
+		loaded_file = TestMatrixWDigraph::DATA_PATH + "\\WDigraph_6_27.txt";
+		std::cout << loaded_file << std::endl;
+
+		matrix_w_digraph->LoadFile(loaded_file);
+
+		for (int i = 0; i < 8; i++)
+		{
+			std::cout << "Shortest from 4 to "<<i<<" in Graph 6.27: " << matrix_w_digraph->shortest_path_Dijkstras(4, i) << std::endl;
+		}
+	}
+	//------------------------------------------------------------------------------------------------
+
+	//------------------------------------------------------------------------------------------------
+	TEST_F(TestMatrixWDigraph, 6_4_2_shortest_path_BellmanFord) {		
+		std::string loaded_file = TestMatrixWDigraph::DATA_PATH + "\\WDigraph_6_31.txt";
+		std::cout << loaded_file << std::endl;
+
+		matrix_w_digraph->LoadFile(loaded_file);
+
+		for (int i = 0; i < 7; i++)
+		{
+			std::cout << "Shortest from 0 to " << i << " in Graph 6.31: "
+				<< matrix_w_digraph->shortest_path_BellmanFord(0, i) << std::endl;
+		}
+	}
+	//------------------------------------------------------------------------------------------------
+
+	//------------------------------------------------------------------------------------------------
+	TEST_F(TestMatrixWDigraph, 6_4_3_shortest_all_path) {
+		std::string loaded_file = TestMatrixWDigraph::DATA_PATH + "\\WDigraph_6_32.txt";
+		std::cout << loaded_file << std::endl;
+
+		matrix_w_digraph->LoadFile(loaded_file);
+		std::vector<std::vector<double>> a = matrix_w_digraph->shortest_all_path();
+
+		int numVer = matrix_w_digraph->NumberOfVertices();
+
+		for (int i = 0; i < numVer; i++)
+		{
+			for (int j = 0; j < numVer; j++)
+			{
+				std::cout << a[i][j]<<",";
+			}
+			std::cout << std::endl;
+		}
+	}
+	//------------------------------------------------------------------------------------------------
+	//------------------------------------------------------------------------------------------------
+	TEST_F(TestMatrixWDigraph, 6_5_1_ActivityOnVertice_TopologicalOrder) {
+		std::string loaded_file = TestMatrixWDigraph::DATA_PATH + "\\graph_6_37.txt";
+		std::cout << loaded_file << std::endl;
+
+		matrix_w_digraph->LoadFile(loaded_file);
+		std::vector<int> topological_sorted = matrix_w_digraph->topological_sort();
+
+		int numVer = matrix_w_digraph->NumberOfVertices();
+		std::cout << "Topological Sorted" << std::endl;
+		for (int i = 0; i < topological_sorted.size(); i++)
+		{
+			std::cout << topological_sorted[i]<<",";
+		}
+		std::cout << std::endl;
+
+		loaded_file = TestMatrixWDigraph::DATA_PATH + "\\graph_6_37_cycle.txt";
+		std::cout << loaded_file << std::endl;
+
+		matrix_w_digraph->LoadFile(loaded_file);
+		topological_sorted = matrix_w_digraph->topological_sort();
+
+		
+		std::cout << "Topological Sorted" << std::endl;
+		for (int i = 0; i < topological_sorted.size(); i++)
+		{
+			std::cout << topological_sorted[i] << ",";
+		}
+		std::cout << std::endl;
+	}
+	//------------------------------------------------------------------------------------------------
 }
 //====================================================================================================
