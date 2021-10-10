@@ -38,7 +38,7 @@ Practice is the best way to confirm what you have learnt.
 		3. [6.4.3 all pairs shortest path](test/src/graph/TestMatrixWDigraph.cpp)
 		4. transitive closure
 	5. Activity networks
-		1. activity on vertex, AOV, TopologicalOrder
+		1. [6.5.1 activity on vertex, AOV, TopologicalOrder](test/src/graph/TestMatrixWDigraph.cpp)
 		2. activity on edge, AOE
 7. Sort
 8. Hashing
