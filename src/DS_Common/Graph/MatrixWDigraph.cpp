@@ -102,18 +102,22 @@ namespace DS_Common {
 				infile >> a >> b >> cost;
 				this->adj_edge[a][b] = 1;
 				this->adj_weight[a][b] = cost;
-				if(is_directional ==0)
+				if (is_directional == 0)
+				{
 					this->adj_edge[b][a] = 1;
 					this->adj_weight[a][b] = cost;
-				std::cout << "Add V: " << a << "& " << b << ", cost" << cost << std::endl;
+				}
+				//std::cout << "Add V: " << a << "& " << b << ", cost" << cost << std::endl;
 			}else {
 				infile >> a >> b;
 				this->adj_edge[a][b] = 1;
 				this->adj_weight[a][b] = 1;
 				if (is_directional == 0)
+				{
 					this->adj_edge[b][a] = 1;
 					this->adj_weight[a][b] = 1;
-				std::cout << "Add V: " << a << "& " << b << std::endl;
+				}					
+				//std::cout << "Add V: " << a << "& " << b << std::endl;
 			}
 		}
 		infile.close();
@@ -176,7 +180,7 @@ namespace DS_Common {
 
 			if (!visited[tmp_v])
 			{
-				std::cout << "Visit ver: " << tmp_v << std::endl;
+				visit_call_back_func(tmp_v);
 				visited[tmp_v] = true;
 
 				for (int w = 0; w < numVer; w++)
@@ -194,6 +198,25 @@ namespace DS_Common {
 	}
 	//------------------------------------------------------------------------------------------------
 
+	void MatrixWDigraph::DFS_share_visit(const int v)
+	{
+		if (v > numVer) return;
+
+		visit_call_back_func(v);
+		visited[v] = true;
+
+		for (int w = 0; w < numVer; w++)
+		{
+			if (this->adj_edge[v][w] == 1)
+			{
+				if (!visited[w])
+				{
+					DFS_share_visit(w);
+				}
+			}			
+		}
+	}
+	//------------------------------------------------------------------------------------------------
 
 	void MatrixWDigraph::BFS(const int v)
 	{
@@ -202,7 +225,7 @@ namespace DS_Common {
 		visited = new bool[numVer];
 		std::fill(visited, visited + numVer, false);
 
-		std::cout << "Visit ver: " << v << std::endl;
+		visit_call_back_func(v);
 		visited[v] = true;
 
 		std::queue<int> q;
@@ -217,8 +240,8 @@ namespace DS_Common {
 				if (this->adj_edge[tmp_v][w] == 1)
 				{
 					if (!visited[w]) {
-						q.push(w);
-						std::cout << "Visit ver: " << w << std::endl;
+						visit_call_back_func(w);
+						q.push(w);	
 						visited[w] = true;
 					}
 				}

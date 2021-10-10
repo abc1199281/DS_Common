@@ -38,16 +38,7 @@ namespace UnitTest {
 namespace UnitTest {
 
 	//------------------------------------------------------------------------------------------------
-	TEST_F(TestMatrixWDigraph, load_data) {
-		std::string loaded_file = TestMatrixWDigraph::DATA_PATH + "\\WDigraph_6_26.txt";
-		std::cout << loaded_file <<std::endl;
-
-		matrix_w_digraph->LoadFile(loaded_file);
-
-	}
-
-	//------------------------------------------------------------------------------------------------
-	TEST_F(TestMatrixWDigraph, basic_operation) {
+	TEST_F(TestMatrixWDigraph, 6_1_3_basic_operation) {
 		int u = 0, v = 1;
 
 		std::string loaded_file = TestMatrixWDigraph::DATA_PATH + "\\graph_6_17.txt";
@@ -62,6 +53,19 @@ namespace UnitTest {
 		std::cout << "In Degree of " << u << ": " << matrix_w_digraph->InDegree(u) << std::endl;
 		std::cout << "Out Degree of " << u << ": " << matrix_w_digraph->OutDegree(u) << std::endl;
 		
+	}
+	//------------------------------------------------------------------------------------------------
+
+	//------------------------------------------------------------------------------------------------
+	TEST_F(TestMatrixWDigraph, 6_2_1_and_6_2_2_DFS_BFS) {
+		int u = 0, v = 1;
+
+		std::string loaded_file = TestMatrixWDigraph::DATA_PATH + "\\graph_6_17.txt";
+		std::cout << loaded_file << std::endl;
+
+		matrix_w_digraph->LoadFile(loaded_file);
+
+
 		std::cout << "DFS of " << std::endl;
 		matrix_w_digraph->DFS(0);
 
@@ -70,6 +74,18 @@ namespace UnitTest {
 	}
 	//------------------------------------------------------------------------------------------------
 
+	//------------------------------------------------------------------------------------------------
+	TEST_F(TestMatrixWDigraph, 6_2_3_Components) {
+		int u = 0, v = 1;
 
+		std::string loaded_file = TestMatrixWDigraph::DATA_PATH + "\\graph_6_17_plus.txt";
+		std::cout << loaded_file << std::endl;
+
+		matrix_w_digraph->LoadFile(loaded_file);
+
+		matrix_w_digraph->Components();
+
+	}
+	//------------------------------------------------------------------------------------------------
 }
 //====================================================================================================
