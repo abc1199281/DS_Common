@@ -16,6 +16,12 @@ Practice is the best way to confirm what you have learnt.
 3. Stack and Queue
 4. Linked list
 5. Tree
+	1. introduction
+	2. Binary tree
+	3. Traversal of binary trees
+	4. More opeartions
+	5. Threaded bionary tree
+	6. [Heaps](test/src/queue/TestPriorityQueue.cpp)
 6. Graph
 	1. introduction
 	2. basic graph operation
@@ -23,7 +29,10 @@ Practice is the best way to confirm what you have learnt.
 		2. [6.2.2 Breadth first search](test/src/graph/TestMatrixWDigraph.cpp)
 		3. [6.2.3 Components](test/src/graph/TestMatrixWDigraph.cpp)
 	3. minimal cost spanning tree
-		1. [6.3.1 Kruskal](test/src/graph/TestMatrixWDigraph.cpp)
+		1. [6.3.1 Kruskal](test/src/graph/TestMatrixWGraph.cpp)
+		2. [6.3.2 Prim](test/src/graph/TestMatrixWGraph.cpp)
+		3. [6.3.3 Sollin](test/src/graph/TestMatrixWGraph.cpp)
+	4. Shortest path and transitive closure
 7. Sort
 8. Hashing
 9. Priority Queue
